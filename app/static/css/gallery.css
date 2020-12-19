@@ -1,0 +1,32 @@
+#gallery .info {
+	display: flex;
+	flex-direction: row;
+}
+
+#gallery .meta {
+	flex: 1;
+}
+
+#gallery .meta header {
+	margin-bottom: 1em;
+	text-align: center;
+}
+
+#gallery .title {
+	margin: 0;
+}
+
+#gallery .artist {
+	color: var(--gray);
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+#gallery .pages {
+	display: flex;
+	flex-flow: wrap row;
+}
+
+#gallery .page {
+	margin: .5em;
+}

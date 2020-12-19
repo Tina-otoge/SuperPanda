@@ -1,0 +1,22 @@
+#reader main {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	z-index: -1;
+}
+
+#reader main > * {
+	margin: auto;
+}
+
+#reader .page img {
+	max-width: 100%;
+	height: 100vh;
+	object-fit: contain;
+}

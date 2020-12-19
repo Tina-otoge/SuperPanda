@@ -1,0 +1,11 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: sans-serif;
+	min-width: 300px;
+	max-width: calc(1000px + 8em);
+	margin: 0 auto;
+}
+

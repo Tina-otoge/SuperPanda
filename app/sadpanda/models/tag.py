@@ -1,6 +1,7 @@
 class Tag:
-    namespace: str
-    value: str
+    def __init__(self, namespace=None, value=None):
+        self.namespace = namespace
+        self.value = value
 
     def __repr__(self):
         return '<{0.__class__.__name__}: {1}>'.format(self, str(self))
@@ -13,6 +14,16 @@ class Tag:
 
     @classmethod
     def from_str(cls, s):
-        result = cls()
-        result.namespace, result.value = s.split(':') if s[0] != ':' else ('misc', s[1:])
-        return result
+        if s[0] == ':':
+            return cls('misc', s[1:])
+        words = s.split(':')
+        if len(words) < 2:
+            value = words[0]
+            namespace = 'misc'
+        else:
+            namespace, value = words
+        return cls(namespace=namespace, value=value)
+
+    @classmethod
+    def language(cls, s):
+        return cls('language', s.lower())

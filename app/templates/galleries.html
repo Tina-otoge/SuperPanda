@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="context-menu">
+	<a href="{{ url_for('.galleries_json') }}">JSON</a>
+</div>
+<div id="galleries">
+	{% for gallery in data %}
+		{% with url = url_for('.gallery', id=gallery.id, token=gallery.token) %}
+		<div class="gallery-entry {{ gallery.category }}">
+			<a href="{{ url }}" class="title">{{ gallery.title }}</a>
+			<main>
+				<a href="{{ url }}" title="{{ gallery.title }}">
+					<img src="{{ gallery.cover_url }}" class="cover">
+					<span class="super-tags">
+						{% if gallery.language %}
+							<span class="language">
+								{{ gallery.language.value }}
+								{% if gallery.is_translation %}(TR){% endif %}
+							</span>
+						{% endif %}
+						<span class="category">{{ gallery.category }}</span>
+					</span>
+				</a>
+				<div class="tags">
+					{% for namespace, tags in gallery.tags_by_namespaces.items() %}
+					<div class="tags-group {{ namespace }}">
+						<span class="namespace">{{ namespace }}:</span>
+						{% for tag in tags %}
+						<span class="tag">{{ tag }}</span>
+						{% endfor %}
+					</div>
+					{% endfor %}
+				</div>
+			</main>
+			<div class="sub-infos">
+				{% if gallery.extracted_title %}
+				<a href="{{ url }}" class="title" title="{{ gallery.title }}">{{ gallery.extracted_title }}</a>
+				{% endif %}
+				{% if gallery.full_artist %}
+				<a href="?search={{ gallery.artist }}" class="artist" title="{{ gallery.full_artist }}">{{ gallery.full_artist }}</a>
+				{% endif %}
+			</div>
+		</div>
+		{% endwith %}
+	{% endfor %}
+</div>
+{% endblock %}

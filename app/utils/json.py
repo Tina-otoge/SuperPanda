@@ -1,7 +1,7 @@
 import json
 
 def default(x):
-    if hasattr(x, 'to_json'):
+    if hasattr(x, 'to_json') and callable(x.to_json):
         return x.to_json()
     try:
         return json.JSONEncoder().default(x)

@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		{% if not title %}
+		<title>SuperPanda, the beautiful SadPanda web client</title>
+		{% else %}
+		<title>{{ title }} - SuperPanda</title>
+		{% endif %}
+		{% assets output="bundle.css",
+			"css/variables.css",
+			"css/base.css",
+			"css/galleries.css",
+			"css/gallery.css",
+			"css/reader.css"
+		%}
+		<link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css">
+		{% endassets %}
+	<main id="main">
+		
+	</main>
+	</head>
+
+	<body>
+
+		{% if title %}<h1>{{ title }}</h1>{% endif %}
+		
+		<a href="{{ url_for('main.index') }}">Home</a>
+		{% block content %}
+		{% endblock %}
+
+	</body>
+</html>

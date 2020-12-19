@@ -1,0 +1,16 @@
+:root {
+	--gray: darkgray;
+
+	--color-doujinshi: radial-gradient(#fc4e4e, #f26f5f);
+	--color-manga: radial-gradient(#e78c1a, #fcb417);
+	--color-non-h: radial-gradient(#0f9ebd, #08d7e2);
+
+	--black-glass: rgba(0, 0, 0, .666);
+
+	--round-small: 0.5em;
+
+	--anim-short: .5s;
+
+	--cover-width: 250px;
+	--cover-height: 362px;
+}

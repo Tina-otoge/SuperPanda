@@ -1,0 +1,161 @@
+#galleries {
+	display: flex;
+	flex-flow: wrap row;
+	justify-content: space-around;
+}
+
+.gallery-entry {
+	margin: 1em;
+	overflow: hidden;
+	width: var(--cover-width);
+	min-height: var(--cover-height);
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.gallery-entry a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.gallery-entry > .title {
+	max-height: 3em;
+	min-height: 3em;
+	font-size: 0.9em;
+	overflow: hidden;
+	display: block;
+	width: 100%;
+	position: absolute;
+	background-color: var(--black-glass);
+	color: white;
+	z-index: 2;
+}
+
+.gallery-entry > .title:hover {
+	max-height: none;
+}
+
+.gallery-entry main {
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+	max-height: calc(var(--cover-height) - 40px);
+}
+
+.gallery-entry main, .gallery-entry .cover {
+	width: 100%;
+}
+
+.gallery-entry .cover {
+	width: 100%;
+	object-fit: contain;
+}
+
+.gallery-entry .super-tags {
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+	font-size: small;
+}
+
+.gallery-entry .super-tags > * {
+	color: white;
+	padding: 0 .4em;
+	margin: 0.2em 0;
+	border-radius: var(--round-small);
+}
+
+.gallery-entry .super-tags .language {
+	background-color: gray;
+}
+
+.gallery-entry .super-tags .category {
+	background-color: red;
+}
+
+.gallery-entry.doujinshi .super-tags .category {
+	background: var(--color-doujinshi);
+}
+
+.gallery-entry.manga .super-tags .category {
+	background: var(--color-manga);
+}
+
+.gallery-entry.non-h .super-tags .category {
+	background: var(--color-non-h);
+}
+
+.gallery-entry .tags {
+	position: absolute;
+	bottom: -100%;
+	width: 60%;
+	max-height: 60%;
+	padding: 0.3em;
+	background-color: var(--black-glass);
+	color: white;
+	font-size: small;
+	overflow: auto;
+	border-radius: 10px 10px 0 0;
+	transition: var(--anim-short);
+}
+.gallery-entry:hover .tags {
+	bottom: 0;
+}
+
+.gallery-entry .tags-group {
+	margin-bottom: 0.5em;
+	display: flex;
+	flex-direction: column;
+}
+
+.gallery-entry .namespace {
+	display: block;
+	border-bottom: 1px solid gray;
+	font-weight: bold;
+}
+
+
+/* --- */
+
+.gallery-entry {
+	padding: 1em;
+	background-color: rgb(240, 240, 240);
+}
+
+.gallery-entry > .title {
+	display: none;
+}
+
+/* .gallery-entry:hover > .title { */
+/* 	display: block; */
+/* } */
+
+.gallery-entry .sub-infos {
+	white-space: nowrap;
+	display: block;
+}
+
+.gallery-entry .sub-infos > * {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	display: block;
+}
+
+.gallery-entry .sub-infos .title {
+	color: black;
+}
+
+.gallery-entry .sub-infos .artist {
+	color: var(--gray);
+}
+
+.gallery-entry .tags-group.artist,
+.gallery-entry .tags-group.group,
+.gallery-entry .tags-group.language {
+	display: none;
+}

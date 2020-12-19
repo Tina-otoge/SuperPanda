@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="context-menu">
+	<a href="{{ url_for('.gallery_json', id=data.id, token=data.token) }}">JSON</a>
+	<a href="{{ data.url }}">EH</a>
+</div>
+
+<div id="gallery">
+	<div class="info">
+		<div class="cover">
+			<img src="{{ data.cover_url }}">
+		</div>
+		<div class="meta">
+			<header>
+				<h2 class="title">
+					{{ data.extracted_title }}
+				</h2>
+				{% if data.full_artist %}
+				<a href="{{ url_for('.galleries') }}?search={{ data.artist }}" class="artist">
+					{{ data.full_artist }}
+				</a>
+				{% endif %}
+			</header>
+		</div>
+	</div>
+	<div class="pages">
+		{% for page in data.pages %}
+		<a
+			href="{{ page.reader_url }}"
+			class="page"
+			style="{{ page.style }}">
+		</a>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
