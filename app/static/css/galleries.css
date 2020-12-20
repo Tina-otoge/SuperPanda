@@ -90,6 +90,10 @@
 	background: var(--color-non-h);
 }
 
+.gallery-entry.western .super-tags .category {
+	background: var(--color-western);
+}
+
 .gallery-entry .tags {
 	position: absolute;
 	bottom: -100%;

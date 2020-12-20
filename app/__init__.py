@@ -19,4 +19,4 @@ def create_app():
     assets = Environment(app)
     return app
 
-from . import routes
+from . import routes, filters

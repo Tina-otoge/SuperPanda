@@ -2,7 +2,7 @@ from datetime import datetime
 import re
 from flask import url_for, request
 
-from .. import http, pages
+from .. import categories, http, pages
 from .tag import Tag
 from .page import Page
 from app.utils import DictObject
@@ -156,7 +156,10 @@ class Gallery(DictObject):
     @classmethod
     def get_galleries(cls):
         response = http.session.get(pages.GALLERIES_SEARCH_URL.format(
-            search=request.args.get('search', '')
+            search=request.args.get('search', ''),
+            category_filter=categories.to_filter(
+                request.args.getlist('filters') or ['non_h']
+            )
         ))
         return cls.get_galleries_from_root(http.to_soup(response.content))
 

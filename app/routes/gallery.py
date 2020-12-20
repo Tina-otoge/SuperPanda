@@ -1,6 +1,7 @@
 from flask import jsonify, render_template
 
 from app import main
+from app.sadpanda.categories import FILTERS
 from app.sadpanda.models import Gallery
 
 @main.route('/galleries/')
@@ -9,6 +10,7 @@ def galleries():
         'galleries.html',
         title='Galleries',
         data=Gallery.get_galleries(),
+        filters=FILTERS,
     )
 
 @main.route('/galleries/json')
