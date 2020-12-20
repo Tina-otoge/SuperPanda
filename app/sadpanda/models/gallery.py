@@ -46,7 +46,7 @@ class Gallery(DictObject):
             for tag in self.tags:
                 if not tag.namespace in self._tags_by_namespace:
                     self._tags_by_namespace[tag.namespace] = []
-                self._tags_by_namespace[tag.namespace].append(tag.value)
+                self._tags_by_namespace[tag.namespace].append(tag)
         return self._tags_by_namespace
 
     @property
@@ -72,9 +72,12 @@ class Gallery(DictObject):
             artist = next(iter(self.tags_by_namespaces.get('artist', [])), None)
             group = next(iter(self.tags_by_namespaces.get('group', [])), None)
             if artist and group:
-                self._full_artist = '{} ({})'.format(artist, group)
+                result = '{} ({})'.format(artist.value, group.value)
             else:
-                self._full_artist = artist or group
+                result = artist or group
+                if result:
+                    result = result.value
+            self._full_artist = result
         return self._full_artist
 
     @property

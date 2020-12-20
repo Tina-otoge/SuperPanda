@@ -9,3 +9,11 @@ body {
 	margin: 0 auto;
 }
 
+a, a:visited {
+	color: var(--blue);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}

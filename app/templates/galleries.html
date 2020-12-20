@@ -27,18 +27,19 @@
 					<div class="tags-group {{ namespace }}">
 						<span class="namespace">{{ namespace }}:</span>
 						{% for tag in tags %}
-						<span class="tag">{{ tag }}</span>
+						<span class="tag">{{ tag.value }}</span>
 						{% endfor %}
 					</div>
 					{% endfor %}
 				</div>
+				<div class="tags-toggle fas fa-info-circle"></div>
 			</main>
 			<div class="sub-infos">
 				{% if gallery.extracted_title %}
 				<a href="{{ url }}" class="title" title="{{ gallery.title }}">{{ gallery.extracted_title }}</a>
 				{% endif %}
 				{% if gallery.full_artist %}
-				<a href="?search={{ gallery.artist }}" class="artist" title="{{ gallery.full_artist }}">{{ gallery.full_artist }}</a>
+				<a href="{{ url_for('.galleries', search=gallery.artist) }}" class="artist" title="{{ gallery.full_artist }}">{{ gallery.full_artist }}</a>
 				{% endif %}
 			</div>
 		</div>
