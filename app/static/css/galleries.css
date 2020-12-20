@@ -141,7 +141,8 @@
 
 .gallery-entry {
 	padding: 1em;
-	background-color: rgb(240, 240, 240);
+	background-color: var(--color-cover-background);
+	color: var(--color-cover-foreground);
 }
 
 .gallery-entry > .title {
@@ -163,12 +164,8 @@
 	display: block;
 }
 
-.gallery-entry .sub-infos .title {
-	color: black;
-}
-
 .gallery-entry .sub-infos .artist {
-	color: var(--gray);
+	color: var(--color-cover-artist-foreground);
 }
 
 .gallery-entry .tags-group.artist,

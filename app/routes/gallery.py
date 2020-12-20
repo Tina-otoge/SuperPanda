@@ -1,17 +1,23 @@
-from flask import jsonify, render_template
+import json
+from flask import jsonify, make_response, render_template
 
 from app import main
+from app.sadpanda import http
 from app.sadpanda.categories import FILTERS
 from app.sadpanda.models import Gallery
 
 @main.route('/galleries/')
 def galleries():
-    return render_template(
+    filters = http.get_filters()
+    response = make_response(render_template(
         'galleries.html',
         title='Galleries',
         data=Gallery.get_galleries(),
-        filters=FILTERS,
-    )
+        filters_list=FILTERS,
+        filters=filters,
+    ))
+    response.set_cookie('filters', http.encode_list(filters))
+    return response
 
 @main.route('/galleries/json')
 def galleries_json():

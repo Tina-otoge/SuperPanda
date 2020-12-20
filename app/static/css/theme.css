@@ -1,0 +1,11 @@
+:root {
+	--color-background: white;
+	--color-foreground: black;
+	--color-link: var(--blue);
+	--color-link-contrast: white;
+
+	--color-cover-background: #f0f0f0;
+	--color-cover-foreground: black;
+
+	--color-cover-artist-foreground: var(--gray);
+}

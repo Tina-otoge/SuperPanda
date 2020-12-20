@@ -158,7 +158,7 @@ class Gallery(DictObject):
         response = http.session.get(pages.GALLERIES_SEARCH_URL.format(
             search=request.args.get('search', ''),
             category_filter=categories.to_filter(
-                request.args.getlist('filters') or ['non_h']
+                http.get_filters()
             )
         ))
         return cls.get_galleries_from_root(http.to_soup(response.content))

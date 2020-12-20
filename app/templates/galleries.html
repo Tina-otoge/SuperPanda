@@ -2,19 +2,24 @@
 {% set json = url_for('.galleries_json') %}
 
 {% block content %}
-<form>
+<form id="galleries-search">
 	<div class="form-input">
 		<label for="search">Search</label>
-		<input name="search" id="search">
+		<input name="search" id="search" value="{{ request.args.get('search', '') }}">
 	</div>
-	<div class="form-input">
-		{% for name in filters %}
+	<div class="form-input checkboxes">
+		{% for name in filters_list %}
 		{% with id = "filter-" + name %}
-		<input id="{{ id }}" type="checkbox" name="filters" value="{{ name }}">
+		<input id="{{ id }}" type="checkbox" name="filters" value="{{ name }}"
+			{% if name in filters %}
+			checked
+			{% endif %}
+		>
 		<label for="{{ id }}">{{ name|nameify }}</label>
 		{% endwith %}
 		{% endfor %}
 	</div>
+	<input type="submit" value="search">
 </form>
 <div id="galleries">
 	{% for gallery in data %}

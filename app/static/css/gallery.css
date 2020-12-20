@@ -35,6 +35,7 @@
 #gallery .pages {
 	display: flex;
 	flex-flow: wrap row;
+	margin: 1em 0;
 }
 
 #gallery .page {

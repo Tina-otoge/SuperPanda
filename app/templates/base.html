@@ -9,6 +9,7 @@
 		{% endif %}
 		{% assets output="bundle.css",
 			"css/variables.css",
+			"css/theme.css",
 			"css/base.css",
 			"css/galleries.css",
 			"css/gallery.css",
@@ -18,6 +19,7 @@
 		{% endassets %}
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- <link rel="stylesheet" href="{{ url_for('static', filename='themes/dark.css') }}"> -->
 	</head>
 
 	<body>
@@ -28,18 +30,12 @@
 
 		<footer>
 			<ul>
-				<li>
-					{% if json %}<a href="{{ json }}">JSON</a>{% endif %}
-				</li>
-				<li>
-					<a href="https://github.com/skielred/SuperPanda">Source code</a>
-				</li>
-				<li>
-					<a href="https://twitter.com/Shookaite">Twitter</a>
-				</li>
-				<li>
-					<a href="https://discord.gg/Yf5NqzQyur">Discord</a>
-				</li>
+				{% if json %}
+				<li><a href="{{ json }}">JSON</a></li>
+				{% endif %}
+				<li><a href="https://github.com/skielred/SuperPanda">Source code</a></li>
+				<li><a href="https://twitter.com/Shookaite">Twitter</a></li>
+				<li><a href="https://discord.gg/Yf5NqzQyur">Discord</a></li>
 			</ul>
 		</footer>
 	</body>
