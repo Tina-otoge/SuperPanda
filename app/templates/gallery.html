@@ -21,7 +21,20 @@
 					{{ data.full_artist }}
 				</a>
 				{% endif %}
+				{% if data.title != data.extracted_title %}
+				<div class="actual-title">{{ data.title }}</div>
+				{% endif %}
 			</header>
+			<div class="tags">
+				{% for namespace, tags in data.tags_by_namespaces.items() %}
+				<div class="tags-group {{ namespace }}">
+					<span class="namespace">{{ namespace }}:</span>
+					{% for tag in tags %}
+					<a href="{{ url_for('.galleries', search=tag) }}" class="tag">{{ tag.value }}</a>
+					{% endfor %}
+				</div>
+				{% endfor %}
+			</div>
 		</div>
 	</div>
 	<div class="pages">

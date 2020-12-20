@@ -102,9 +102,21 @@
 	overflow: auto;
 	border-radius: 10px 10px 0 0;
 	transition: var(--anim-short);
+	z-index: 2;
 }
 .gallery-entry:hover .tags {
 	bottom: 0;
+}
+
+.gallery-entry .tags-toggle {
+	position: absolute;
+	left: 5px;
+	bottom: 5px;
+	z-index: 1;
+}
+
+.gallery-entry:hover .tags-toggle {
+	visibility: hidden;
 }
 
 .gallery-entry .tags-group {

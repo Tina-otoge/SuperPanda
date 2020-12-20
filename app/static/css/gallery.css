@@ -3,6 +3,12 @@
 	flex-direction: row;
 }
 
+#gallery .cover {
+	display: flex;
+	justify-content: center;
+	padding: 1em;
+}
+
 #gallery .meta {
 	flex: 1;
 }
@@ -12,14 +18,18 @@
 	text-align: center;
 }
 
-#gallery .title {
+#gallery header .title {
 	margin: 0;
 }
 
-#gallery .artist {
+#gallery header .artist {
 	color: var(--gray);
 	font-size: 1.5em;
 	font-weight: bold;
+}
+
+#gallery header .actual-title {
+	font-size: 0.9em;
 }
 
 #gallery .pages {
@@ -29,4 +39,20 @@
 
 #gallery .page {
 	margin: .5em;
+}
+
+#gallery .tags-group {
+	margin: 0.5em 0;
+}
+
+#gallery .namespace {
+	border: 1px solid black;
+	padding: 0.2em;
+	display: inline-block;
+}
+
+@media screen and (max-width: 900px) {
+	#gallery .info {
+		flex-direction: column;
+	}
 }
