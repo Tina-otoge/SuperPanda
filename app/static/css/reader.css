@@ -3,12 +3,24 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
 	height: 100vh;
 	z-index: -1;
+}
+
+#reader .previews {
+	display: none;
+	flex-flow: wrap row;
+}
+
+@media screen and (max-width: 900px) {
+	#reader main .previous,
+	#reader main .next {
+		display: none;
+	}
+
+	#reader .previews {
+		display: flex;
+	}
 }
 
 #reader main > * {

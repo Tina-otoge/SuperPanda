@@ -3,12 +3,16 @@
 {% block content %}
 <div id="reader">
 	<main>
-		<a href="{{ data.prev.reader_url }}" id="previous" style="{{ data.prev_style }}"></a>
+		<a href="{{ data.prev.reader_url }}" class="previous" style="{{ data.prev_style }}"></a>
 		<a href="{{ data.next.reader_url }}" class="page">
 			<img src="{{ data.image }}">
 		</a>
-		<a href="{{ data.next.reader_url }}" id="forward" style="{{ data.next_style }}"></a>
+		<a href="{{ data.next.reader_url }}" class="next" style="{{ data.next_style }}"></a>
 	</main>
+	<div class="previews">
+		<a href="{{ data.prev.reader_url }}" class="previous" style="{{ data.prev_style }}"></a>
+		<a href="{{ data.next.reader_url }}" class="next" style="{{ data.next_style }}"></a>
+	</div>
 	<footer>
 		<a href="{{ url_for('.gallery', id=data.gallery, token=data.gallery_token) }}">
 			Back to gallery

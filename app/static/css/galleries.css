@@ -111,8 +111,9 @@
 .gallery-entry .tags-toggle {
 	position: absolute;
 	left: 5px;
-	bottom: 5px;
-	z-index: 1;
+	bottom: 10px;
+	z-index: 3;
+	text-shadow: 0 0 3px white;
 }
 
 .gallery-entry:hover .tags-toggle {
@@ -170,4 +171,49 @@
 .gallery-entry .tags-group.group,
 .gallery-entry .tags-group.language {
 	display: none;
+}
+
+@media screen and (max-width: 900px) {
+	#galleries {
+		flex-direction: column;
+	}
+
+	.gallery-entry {
+		width: auto;
+	}
+
+	.gallery-entry main {
+		display: flex;
+		flex-direction: row;
+		margin-bottom: 0.5em;
+	}
+
+	.gallery-entry .cover {
+		max-width: 45vw;
+	}
+
+	.gallery-entry .all-tags {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.gallery-entry .tags,
+	.gallery-entry .super-tags {
+		position: initial;
+	}
+
+	.gallery-entry .tags {
+		bottom: 0;
+		width: auto;
+		max-height: none;
+		background: none;
+		color: inherit;
+		font-size: 1em;
+	}
+
+	.gallery-entry .sub-infos {
+		white-space: initial;
+	}
 }

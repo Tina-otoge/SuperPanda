@@ -1,11 +1,7 @@
 {% extends "base.html" %}
+{% set json = url_for('.gallery_json', id=data.id, token=data.token) %}
 
 {% block content %}
-<div id="context-menu">
-	<a href="{{ url_for('.gallery_json', id=data.id, token=data.token) }}">JSON</a>
-	<a href="{{ data.url }}">EH</a>
-</div>
-
 <div id="gallery">
 	<div class="info">
 		<div class="cover">
@@ -34,6 +30,9 @@
 					{% endfor %}
 				</div>
 				{% endfor %}
+			</div>
+			<div class="buttons">
+				<a href="{{ data.url }}" class="button">See on EH</a>
 			</div>
 		</div>
 	</div>

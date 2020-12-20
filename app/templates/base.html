@@ -18,18 +18,16 @@
 		{% endassets %}
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-	<main id="main">
-		
-	</main>
 	</head>
 
 	<body>
 
 		{% if title %}<h1>{{ title }}</h1>{% endif %}
-		
-		<a href="{{ url_for('main.index') }}">Home</a>
 		{% block content %}
 		{% endblock %}
 
+		<footer>
+			{% if json %}<a href="{{ json }}">JSON</a>{% endif %}
+		</footer>
 	</body>
 </html>
