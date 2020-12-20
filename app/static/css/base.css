@@ -17,3 +17,11 @@ a, a:visited {
 a:hover {
 	text-decoration: underline;
 }
+
+.button, a.button, a.button:hover {
+	background-color: var(--blue);
+	color: white;
+	padding: .3em 1em;
+	border-radius: var(--round-small);
+	text-decoration: none;
+}

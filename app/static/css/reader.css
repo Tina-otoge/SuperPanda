@@ -32,3 +32,7 @@
 	height: 100vh;
 	object-fit: contain;
 }
+
+#reader footer {
+	text-align: center;
+}

@@ -2,6 +2,9 @@
 {% set json = url_for('.gallery_json', id=data.id, token=data.token) %}
 
 {% block content %}
+<p>
+	<a href="{{ url_for('.galleries') }}">Back to home page</a>
+</p>
 <div id="gallery">
 	<div class="info">
 		<div class="cover">
@@ -13,7 +16,7 @@
 					{{ data.extracted_title }}
 				</h2>
 				{% if data.full_artist %}
-				<a href="{{ url_for('.galleries') }}?search={{ data.artist }}" class="artist">
+				<a href="{{ url_for('.galleries', search=data.artist) }}" class="artist">
 					{{ data.full_artist }}
 				</a>
 				{% endif %}

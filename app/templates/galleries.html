@@ -2,6 +2,12 @@
 {% set json = url_for('.galleries_json') %}
 
 {% block content %}
+<form>
+	<div class="form-input">
+		<label for="search">Search</label>
+		<input name="search" id="search">
+	</div>
+</form>
 <div id="galleries">
 	{% for gallery in data %}
 		{% with url = url_for('.gallery', id=gallery.id, token=gallery.token) %}
