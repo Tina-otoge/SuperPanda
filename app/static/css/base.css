@@ -12,6 +12,7 @@ body {
 a, a:visited {
 	color: var(--blue);
 	text-decoration: none;
+	cursor: pointer;
 }
 
 a:hover {
@@ -24,4 +25,5 @@ a:hover {
 	padding: .3em 1em;
 	border-radius: var(--round-small);
 	text-decoration: none;
+	display: inline-block;
 }

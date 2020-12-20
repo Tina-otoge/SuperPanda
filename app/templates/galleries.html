@@ -9,8 +9,10 @@
 	</div>
 	<div class="form-input">
 		{% for name in filters %}
-		<input type="checkbox" name="filters" value="{{ name }}">
-		<label for="filter-{{ name }}">{{ name|nameify }}</label>
+		{% with id = "filter-" + name %}
+		<input id="{{ id }}" type="checkbox" name="filters" value="{{ name }}">
+		<label for="{{ id }}">{{ name|nameify }}</label>
+		{% endwith %}
 		{% endfor %}
 	</div>
 </form>

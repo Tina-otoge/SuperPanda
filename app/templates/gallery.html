@@ -7,9 +7,9 @@
 </p>
 <div id="gallery">
 	<div class="info">
-		<div class="cover">
+		<a href="{{ data.pages[0].reader_url }}" class="cover">
 			<img src="{{ data.cover_url }}">
-		</div>
+		</a>
 		<div class="meta">
 			<header>
 				<h2 class="title">
@@ -36,6 +36,7 @@
 			</div>
 			<div class="buttons">
 				<a href="{{ data.url }}" class="button">See on EH</a>
+				<a class="button">Add to favorites</a>
 			</div>
 		</div>
 	</div>
