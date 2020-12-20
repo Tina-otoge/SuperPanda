@@ -23,7 +23,7 @@ def decode_list(s):
 def get_filters():
     return (
         request.args.getlist('filters') or
-        decode_list(request.cookies.get('filters')) or
+        decode_list(request.cookies.get('filters', '')) or
         ['non-h']
     )
 
