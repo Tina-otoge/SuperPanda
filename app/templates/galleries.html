@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% set json = url_for('.galleries_json') %}
+{% set search = request.args.get('search') %}
 
 {% block content %}
 <form id="galleries-search">
 	<div class="form-input">
 		<label for="search">Search</label>
-		<input name="search" id="search" value="{{ request.args.get('search', '') }}">
+		<input name="search" id="search" value="{{ search or '' }}">
 	</div>
 	<div class="form-input checkboxes" id="filters">
 		{% for name in filters_list %}
@@ -26,9 +27,9 @@
 </form>
 <div class="pager">
 	{% if page > 1 %}
-	<a href="{{ url_for('.galleries', page=page - 1) }}">Prev</a>
+	<a href="{{ url_for('.galleries', search=search, page=page - 1) }}">Prev</a>
 	{% endif %}
-	<a href="{{ url_for('.galleries', page=page + 1) }}">Next</a>
+	<a href="{{ url_for('.galleries', search=search, page=page + 1) }}">Next</a>
 </div>
 <div id="galleries">
 	{% for gallery in data %}
@@ -75,8 +76,8 @@
 </div>
 <div class="pager">
 	{% if page > 1 %}
-	<a href="{{ url_for('.galleries', page=page - 1) }}">Prev</a>
+	<a href="{{ url_for('.galleries', search=search, page=page - 1) }}">Prev</a>
 	{% endif %}
-	<a href="{{ url_for('.galleries', page=page + 1) }}">Next</a>
+	<a href="{{ url_for('.galleries', search=search, page=page + 1) }}">Next</a>
 </div>
 {% endblock %}
