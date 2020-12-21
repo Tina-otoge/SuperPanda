@@ -48,3 +48,7 @@ a:hover {
 .pager {
 	text-align: center;
 }
+
+img.cover, .cover img {
+	object-fit: contain;
+}
