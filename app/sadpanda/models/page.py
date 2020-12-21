@@ -43,7 +43,7 @@ class Page:
         if not self.loaded:
             from .gallery import Gallery
             soup = http.to_soup(http.session.get(self.url).content)
-            self._image = soup.find('img', id='img').get('src')
+            self._image = self.get_image(soup)
             self._prev = self.__class__.from_url_str(soup.find('a', id='prev').get('href'))
             self._next = self.__class__.from_url_str(soup.find('a', id='next').get('href'))
             self._gallery_token = self.get_gallery_token(
@@ -56,8 +56,24 @@ class Page:
             )
             self._prev_style = self._gallery.pages[index - 1].style if index > 1 else ''
             self._next_style = self._gallery.pages[index + 1].style if index < self._gallery.pages_count else ''
+            self._preloaded_image = None
             self.loaded = True
 
+
+    @property
+    def preloaded_image(self):
+        if not self.loaded:
+            self.load()
+        if self._preloaded_image is None:
+            soup = http.to_soup(http.session.get(self.next.url).content)
+            self._preloaded_image = self.get_image(soup)
+        return self._preloaded_image
+
+    @property
+    def previews(self):
+        if not self.loaded:
+            self.load()
+        return self._gallery.pages
 
     @property
     def image(self):
@@ -96,6 +112,24 @@ class Page:
         return self._gallery.pages_count
 
     @property
+    def tags(self):
+        if not self.loaded:
+            self.load()
+        return self._gallery.tags
+
+    @property
+    def title(self):
+        if not self.loaded:
+            self.load()
+        return self._gallery.title
+
+    @property
+    def artist(self):
+        if not self.loaded:
+            self.load()
+        return self._gallery.artist
+
+    @property
     def gallery_token(self):
         if not self.loaded:
             self.load()
@@ -114,3 +148,7 @@ class Page:
     @staticmethod
     def get_gallery_token(soup):
         return soup.get('href').split('/')[-2]
+
+    @staticmethod
+    def get_image(soup):
+        return soup.find('img', id='img').get('src')

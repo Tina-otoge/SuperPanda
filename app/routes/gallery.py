@@ -27,10 +27,12 @@ def galleries_json():
 
 @main.route('/galleries/<int:id>-<string:token>')
 def gallery(id, token):
+    page = http.get_page()
     return render_template(
         'gallery.html',
         title='Gallery',
-        data=Gallery.get_gallery_from_id_token(id, token),
+        page=page,
+        data=Gallery.get_gallery_from_id_token(id, token, page=page),
     )
 
 @main.route('/galleries/<int:id>-<string:token>/json')

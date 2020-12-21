@@ -29,12 +29,7 @@
 	<a href="{{ url_for('.set_theme', name='dark') }}">Dark theme</a>
 	<a href="{{ url_for('.set_theme', name='default') }}">Default theme</a>
 </p>
-<div class="pager">
-	{% if page > 1 %}
-	<a href="{{ url_for('.galleries', search=search, page=page - 1) }}">Prev</a>
-	{% endif %}
-	<a href="{{ url_for('.galleries', search=search, page=page + 1) }}">Next</a>
-</div>
+{% include "_pager.html" %}
 <div id="galleries">
 	{% for gallery in data %}
 		{% with url = url_for('.gallery', id=gallery.id, token=gallery.token) %}
@@ -78,10 +73,5 @@
 		{% endwith %}
 	{% endfor %}
 </div>
-<div class="pager">
-	{% if page > 1 %}
-	<a href="{{ url_for('.galleries', search=search, page=page - 1) }}">Prev</a>
-	{% endif %}
-	<a href="{{ url_for('.galleries', search=search, page=page + 1) }}">Next</a>
-</div>
+{% include "_pager.html" %}
 {% endblock %}

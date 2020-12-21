@@ -101,6 +101,10 @@ class Gallery(DictObject):
             return None
         return result
 
+    @property
+    def first_page(self):
+        return list(self.pages.values())[0]
+
     @classmethod
     def from_galleries_soup(cls, soup):
         panel = soup.find('td', class_='gl1e')
@@ -155,8 +159,8 @@ class Gallery(DictObject):
         )
 
     @classmethod
-    def get_gallery_from_id_token(cls, id, token, has_pages=[]):
-        pages_nb = [] if has_pages else [0]
+    def get_gallery_from_id_token(cls, id, token, page=None, has_pages=[]):
+        pages_nb = [] if has_pages else [page - 1]
         for page in has_pages:
             page = (page - 1) // 40
             if page not in pages_nb:

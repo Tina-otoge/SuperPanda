@@ -52,3 +52,7 @@ a:hover {
 img.cover, .cover img {
 	object-fit: contain;
 }
+
+.preload {
+	display: none;
+}

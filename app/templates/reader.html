@@ -13,6 +13,8 @@
 		<a href="{{ data.prev.reader_url }}" class="previous" style="{{ data.prev_style }}"></a>
 		<a href="{{ data.next.reader_url }}" class="next" style="{{ data.next_style }}"></a>
 	</div>
+	<div class="preload">
+	</div>
 	<footer>
 		<p>{{ data.page }} / {{ data.pages }}</p>
 		<p>
@@ -22,6 +24,24 @@
 		</p>
 		<p>
 			<a id="back-to-home" href="{{ url_for('.galleries') }}">Back to home</a>
+		</p>
+		<p class="title">
+			{{ data.title }}
+		</p>
+		{% if data.artist %}
+		<a href="{{ url_for('.galleries', search=data.artist) }}" class="artist">
+			{{ data.artist.value }}
+		</a>
+		{% endif %}
+		<p class="all-previews">
+			{% for page in data.previews.values() %}
+			<a href="{{ page.reader_url }}" class="page" style="{{ page.style }}"></a>
+			{% endfor %}
+		</p>
+		<p class="tags">
+			{% for tag in data.tags %}
+			<a href="{{ url_for('.galleries', search=tag) }}" class="tag">{{ tag }}</a>
+			{% endfor %}
 		</p>
 	</footer>
 </div>

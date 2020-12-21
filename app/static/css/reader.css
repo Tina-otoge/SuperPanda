@@ -36,3 +36,15 @@
 #reader footer {
 	text-align: center;
 }
+
+#reader footer .all-previews {
+	display: flex;
+	flex-flow: wrap row;
+}
+
+#reader footer .tag {
+	padding: 0.3em;
+	border: 1px solid black;
+	display: inline-block;
+	margin: 0.2em;
+}
