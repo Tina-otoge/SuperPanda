@@ -19,13 +19,18 @@ def encode_list(l):
     return ','.join(l)
 
 def decode_list(s):
-    return s.split(',')
+    if not s:
+        return []
+    return s.strip().split(',')
 
-def get_filters():
+def get_filters(request_only=False):
+    request_filters = request.args.getlist('filters')
+    if request_only:
+        return request_filters
     return (
-        request.args.getlist('filters') or
-        decode_list(request.cookies.get('filters', '')) or
-        ['non-h']
+        request_filters or
+        decode_list(request.cookies.get('filters')) or
+        ['non_h']
     )
 
 def get_page():

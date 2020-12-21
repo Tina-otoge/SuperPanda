@@ -18,7 +18,9 @@ def galleries():
         filters_list=FILTERS,
         filters=filters,
     ))
-    response.set_cookie('filters', http.encode_list(filters))
+    request_filters = http.get_filters(request_only=True)
+    if request_filters:
+        response.set_cookie('filters', http.encode_list(request_filters))
     return response
 
 @main.route('/galleries/json')
