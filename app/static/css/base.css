@@ -40,3 +40,7 @@ a:hover {
 .form-input.checkboxes {
 	flex-flow: wrap row;
 }
+
+.form-input.checkboxes > * {
+	margin-right: 1em;
+}

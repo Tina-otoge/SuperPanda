@@ -9,10 +9,12 @@ from app.sadpanda.models import Gallery
 @main.route('/galleries/')
 def galleries():
     filters = http.get_filters()
+    page = http.get_page()
     response = make_response(render_template(
         'galleries.html',
         title='Galleries',
-        data=Gallery.get_galleries(),
+        data=Gallery.get_galleries(page=page),
+        page=page,
         filters_list=FILTERS,
         filters=filters,
     ))

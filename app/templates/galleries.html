@@ -7,20 +7,29 @@
 		<label for="search">Search</label>
 		<input name="search" id="search" value="{{ request.args.get('search', '') }}">
 	</div>
-	<div class="form-input checkboxes">
+	<div class="form-input checkboxes" id="filters">
 		{% for name in filters_list %}
-		{% with id = "filter-" + name %}
-		<input id="{{ id }}" type="checkbox" name="filters" value="{{ name }}"
-			{% if name in filters %}
-			checked
-			{% endif %}
-		>
-		<label for="{{ id }}">{{ name|nameify }}</label>
-		{% endwith %}
+		<div class="form-input-checkbox">
+			{% with id = "filter-" + name %}
+			<input id="{{ id }}" type="checkbox" name="filters" value="{{ name }}"
+				{% if name in filters %}
+				checked
+				{% endif %}
+			>
+			<label for="{{ id }}">{{ name|nameify }}</label>
+			{% endwith %}
+		</div>
 		{% endfor %}
+		<a id="toggle-all-filters">Toggle all</a>
 	</div>
 	<input type="submit" value="search">
 </form>
+<div class="pager">
+	{% if page > 1 %}
+	<a href="{{ url_for('.galleries', page=page - 1) }}">Prev</a>
+	{% endif %}
+	<a href="{{ url_for('.galleries', page=page + 1) }}">Next</a>
+</div>
 <div id="galleries">
 	{% for gallery in data %}
 		{% with url = url_for('.gallery', id=gallery.id, token=gallery.token) %}
@@ -63,5 +72,11 @@
 		</div>
 		{% endwith %}
 	{% endfor %}
+</div>
+<div class="pager">
+	{% if page > 1 %}
+	<a href="{{ url_for('.galleries', page=page - 1) }}">Prev</a>
+	{% endif %}
+	<a href="{{ url_for('.galleries', page=page + 1) }}">Next</a>
 </div>
 {% endblock %}

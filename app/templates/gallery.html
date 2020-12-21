@@ -15,11 +15,18 @@
 				<h2 class="title">
 					{{ data.extracted_title }}
 				</h2>
-				{% if data.full_artist %}
-				<a href="{{ url_for('.galleries', search=data.artist) }}" class="artist">
-					{{ data.full_artist }}
-				</a>
-				{% endif %}
+				<span class="artist">
+					{% if data.artist %}
+					<a href="{{ url_for('.galleries', search=data.artist) }}">
+						{{ data.artist.value }}
+					</a>
+					{% endif %}
+					{% if data.group_not_artist %}
+					<a href="{{ url_for('.galleries', search=data.group_not_artist) }}" class="group">
+						({{ data.group_not_artist.value }})
+					</a>
+					{% endif %}
+				</span>
 				{% if data.title != data.extracted_title %}
 				<div class="actual-title">{{ data.title }}</div>
 				{% endif %}

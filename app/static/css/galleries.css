@@ -205,6 +205,14 @@
 		position: initial;
 	}
 
+	.gallery-entry .super-tags {
+		flex-flow: wrap row-reverse;
+	}
+
+	.gallery-entry .super-tags > * {
+		margin: 0 1em;
+	}
+
 	.gallery-entry .tags {
 		bottom: 0;
 		width: auto;

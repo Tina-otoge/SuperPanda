@@ -18,6 +18,10 @@
 	text-align: center;
 }
 
+#gallery .meta header a {
+	color: inherit;
+}
+
 #gallery header .title {
 	margin: 0;
 }

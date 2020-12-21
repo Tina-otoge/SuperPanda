@@ -69,7 +69,7 @@ class Gallery(DictObject):
     @property
     def full_artist(self):
         if self._full_artist is None:
-            artist = next(iter(self.tags_by_namespaces.get('artist', [])), None)
+            artist = self.artist
             group = next(iter(self.tags_by_namespaces.get('group', [])), None)
             if artist and group:
                 result = '{} ({})'.format(artist.value, group.value)
@@ -83,11 +83,23 @@ class Gallery(DictObject):
     @property
     def artist(self):
         if self._artist is None:
-            self._artist = (
-                next(iter(self.tags_by_namespaces.get('artist', [])), None) or
-                next(iter(self.tags_by_namespaces.get('group', [])), None)
-            )
+            artists = self.tags_by_namespaces.get('artist', [])
+            if len(artists) != 1:
+                self._artist = self.group
+            else:
+                self._artist = artists[0]
         return self._artist
+
+    @property
+    def group(self):
+        return next(iter(self.tags_by_namespaces.get('group', [])), None)
+
+    @property
+    def group_not_artist(self):
+        result = self.group
+        if result == self.artist:
+            return None
+        return result
 
     @classmethod
     def from_galleries_soup(cls, soup):
@@ -151,11 +163,14 @@ class Gallery(DictObject):
     @classmethod
     def get_galleries_from_root(cls, soup):
         table = soup.find(class_=['itg', 'glte'])
+        if not table:
+            return []
         return [cls.from_galleries_soup(x) for x in table.contents if x.find(class_='gl1e')]
 
     @classmethod
-    def get_galleries(cls):
+    def get_galleries(cls, page=1):
         response = http.session.get(pages.GALLERIES_SEARCH_URL.format(
+            page=page - 1,
             search=request.args.get('search', ''),
             category_filter=categories.to_filter(
                 http.get_filters()

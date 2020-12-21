@@ -27,5 +27,11 @@ def get_filters():
         ['non-h']
     )
 
+def get_page():
+    try:
+        return int(request.args.get('page'))
+    except TypeError:
+        return 1
+
 def to_soup(x):
     return BeautifulSoup(x, 'html.parser')
