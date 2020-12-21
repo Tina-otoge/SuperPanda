@@ -31,6 +31,23 @@ if (galleries) {
 }
 
 const gallery = document.getElementById('gallery');
+if (gallery) {
+	const artist = gallery.querySelector('.tags-group.artist a')
+	const group = gallery.querySelector('.tags-group.group a')
+	const parody = gallery.querySelector('.tags-group.parody a')
+	const character = gallery.querySelector('.tags-group.character a')
+
+	document.addEventListener('keydown', e => {
+		if (e.key == 'a' && artist)
+			location.href = artist.href;
+		else if (e.key == 'g' && group)
+			location.href = group.href;
+		else if (e.key == 'p' && parody)
+			location.href = parody.href;
+		else if (e.key == 'c' && character)
+			location.href = character.href;
+	});
+}
 
 const reader = document.getElementById('reader');
 if (reader) {

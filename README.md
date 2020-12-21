@@ -41,3 +41,7 @@ a/q/h/left  | Reader         | Go to previous page
 d/l/right   | Reader         | Go to next page
 g/backspace | Reader         | Go back to gallery
 e/t         | Reader/Gallery | Go back to home
+c           | Gallery        | Search galleries by first character
+a           | Gallery        | Search galleries by first artist
+g           | Gallery        | Search galleries by first group
+p           | Gallery        | Search galleries by first parody
