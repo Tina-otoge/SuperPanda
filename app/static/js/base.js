@@ -1,8 +1,17 @@
+function toggleFullscreen(elem = document.documentElement) {
+	if (document.fullscreenElement)
+		return document.exitFullscreen();
+	elem.requestFullscreen();
+}
 document.addEventListener('keydown', e => {
+	if (document.activeElement != document.body)
+		return;
 	if (e.key == 's')
 		window.scrollBy(0, 50);
 	if (['z', 'w'].includes(e.key))
 		window.scrollBy(0, -50);
+	if (['f'].includes(e.key))
+		toggleFullscreen();
 });
 
 const galleries = document.getElementById('galleries');
