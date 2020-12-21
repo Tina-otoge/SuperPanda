@@ -8,7 +8,7 @@ FILTERS = {
     'game_cg': 16,
     'image_set': 32,
     'cosplay': 64,
-    'asian_porn': 895,
+    'asian_porn': 128,
     'non_h': 256,
     'western': 512,
 }
