@@ -16,12 +16,12 @@
 	<footer>
 		<p>{{ data.page }} / {{ data.pages }}</p>
 		<p>
-			<a href="{{ url_for('.gallery', id=data.gallery, token=data.gallery_token) }}">
+			<a id="back-to-gallery" href="{{ url_for('.gallery', id=data.gallery, token=data.gallery_token) }}">
 				Back to gallery
 			</a>
 		</p>
 		<p>
-			<a href="{{ url_for('.galleries') }}">Back to home</a>
+			<a id="back-to-home" href="{{ url_for('.galleries') }}">Back to home</a>
 		</p>
 	</footer>
 </div>

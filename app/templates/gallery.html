@@ -3,7 +3,7 @@
 
 {% block content %}
 <p>
-	<a href="{{ url_for('.galleries') }}">Back to home page</a>
+	<a id="back-to-home" href="{{ url_for('.galleries') }}">Back to home page</a>
 </p>
 <div id="gallery">
 	<div class="info">
@@ -43,7 +43,7 @@
 			</div>
 			<div class="buttons">
 				<a href="{{ data.url }}" class="button">See on EH</a>
-				<a class="button">Add to favorites</a>
+				<!-- <a class="button">Add to favorites</a> -->
 			</div>
 		</div>
 	</div>
