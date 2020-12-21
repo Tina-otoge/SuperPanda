@@ -44,17 +44,18 @@ class Page:
             from .gallery import Gallery
             soup = http.to_soup(http.session.get(self.url).content)
             self._image = soup.find('img', id='img').get('src')
-            self._prev = self.__class__.from_str(soup.find('a', id='prev').get('href'))
-            self._next = self.__class__.from_str(soup.find('a', id='next').get('href'))
+            self._prev = self.__class__.from_url_str(soup.find('a', id='prev').get('href'))
+            self._next = self.__class__.from_url_str(soup.find('a', id='next').get('href'))
             self._gallery_token = self.get_gallery_token(
                 soup.find('div', id='i5').find('a')
             )
+            index = self.page
             self._gallery = Gallery.get_gallery_from_id_token(
                 self.gallery, self._gallery_token,
+                has_pages=[index - 1, index, index + 1],
             )
-            index = self.page - 1
-            self._prev_style = self._gallery.pages[index - 1].style if index > 0 else ''
-            self._next_style = self._gallery.pages[index + 1].style if index < self._gallery.pages_count - 1 else ''
+            self._prev_style = self._gallery.pages[index - 1].style if index > 1 else ''
+            self._next_style = self._gallery.pages[index + 1].style if index < self._gallery.pages_count else ''
             self.loaded = True
 
 
@@ -101,10 +102,10 @@ class Page:
         return self._gallery_token
 
     @classmethod
-    def from_str(cls, s, *args, **kwargs):
+    def from_url_str(cls, s, *args, **kwargs):
         token, leftover = s.split('/')[-2:]
         gallery, page = leftover.split('-')
-        return cls(*args, gallery=gallery, token=token, page=page, **kwargs)
+        return cls(*args, gallery=gallery, token=token, page=int(page), **kwargs)
 
     @classmethod
     def from_url(cls, url):

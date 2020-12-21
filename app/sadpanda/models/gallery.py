@@ -137,10 +137,13 @@ class Gallery(DictObject):
             cover_url=cls.get_background(main.find('div', id='gd1').find('div')),
             posted_at=cls.to_time(meta_list[0].text),
             pages_count=cls.get_pages(meta_list[5].text),
-            pages=[
-                Page.from_str(x.find('div').find('a').get('href'), style=x.find('div').get('style'))
-                for x in pages.find_all('div', class_='gdtm')
-            ],
+            pages={
+                p.page: p
+                for p in [
+                    Page.from_url_str(x.find('div').find('a').get('href'), style=x.find('div').get('style'))
+                    for x in pages.find_all('div', class_='gdtm')
+                ]
+            },
             language=Tag.language(meta_list[3].text.split(' ')[0]),
             cateogry=cls.get_category(meta.find('div', id='gdc').find('div')),
             tags=[Tag.from_str(x.get('id')[3:]) for x in cls.find_tags(main)],
@@ -152,13 +155,23 @@ class Gallery(DictObject):
         )
 
     @classmethod
-    def get_gallery_from_id_token(cls, id, token):
-        url = pages.GALLERY_URL.format(id=id, token=token)
-        response = http.session.get(url)
-        return cls.from_gallery_soup(
-            http.to_soup(response.content),
-            id=id, token=token, url=url
+    def get_gallery_from_id_token(cls, id, token, has_pages=[]):
+        pages_nb = [] if has_pages else [0]
+        for page in has_pages:
+            page = (page - 1) // 40
+            if page not in pages_nb:
+                pages_nb.append(page)
+        urls = [pages.GALLERY_URL.format(id=id, token=token, page=page) for page in pages_nb]
+        responses = [http.session.get(url) for url in urls]
+        result = cls.from_gallery_soup(
+            http.to_soup(responses[0].content),
+            id=id, token=token, url=urls[0]
         )
+        for response in responses[1:]:
+            result.pages.update(
+                cls.from_gallery_soup(http.to_soup(response.content)).pages
+            )
+        return result
 
     @classmethod
     def get_galleries_from_root(cls, soup):

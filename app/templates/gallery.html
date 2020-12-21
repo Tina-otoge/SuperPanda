@@ -7,7 +7,7 @@
 </p>
 <div id="gallery">
 	<div class="info">
-		<a href="{{ data.pages[0].reader_url }}" class="cover">
+		<a href="{{ data.pages[1].reader_url }}" class="cover">
 			<img src="{{ data.cover_url }}">
 		</a>
 		<div class="meta">
@@ -48,7 +48,7 @@
 		</div>
 	</div>
 	<div class="pages">
-		{% for page in data.pages %}
+		{% for page in data.pages.values() %}
 		<a
 			href="{{ page.reader_url }}"
 			class="page"

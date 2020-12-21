@@ -44,3 +44,7 @@ a:hover {
 .form-input.checkboxes > * {
 	margin-right: 1em;
 }
+
+.pager {
+	text-align: center;
+}
