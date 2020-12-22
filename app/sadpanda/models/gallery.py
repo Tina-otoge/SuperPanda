@@ -180,21 +180,29 @@ class Gallery(DictObject):
 
     @classmethod
     def from_id(cls, id, token, page=None, has_pages=[]):
-        page = page or http.get_page()
-        pages_nb = [] if has_pages else [page - 1]
-        for page in has_pages:
-            page = (page - 1) // 40
-            if page not in pages_nb:
-                pages_nb.append(page)
-        urls = [pages.GALLERY_ROUTE.format(id=id, token=token, page=page) for page in pages_nb]
-        responses = [http.call(url) for url in urls]
+        page = (page or http.get_page()) - 1
+        missing = []
+        url=pages.GALLERY_ROUTE.format(id=id, token=token, page=page)
         result = cls.from_gallery_soup(
-            http.to_soup(responses[0].content),
-            id=id, token=token, url=urls[0]
+            http.to_soup(http.call(url).content),
+            id=id, token=token, url=url,
         )
-        for response in responses[1:]:
+        is_large = result.first_page.type == 'image'
+        for page in has_pages:
+            page = (page - 1) // (20 if is_large else 40)
+            if page not in missing and page > (0 if is_large else 1):
+                missing.append(page)
+        urls = [
+            pages.GALLERY_ROUTE.format(id=id, token=token, page=page)
+            for page in missing
+        ]
+        responses = [http.call(url) for url in urls]
+        for url in urls:
             result.pages.update(
-                cls.from_gallery_soup(http.to_soup(response.content)).pages
+                cls.from_gallery_soup(
+                    http.to_soup(http.call(url).content),
+                    url=url,
+                ).pages
             )
         return result
 

@@ -4,7 +4,7 @@ from app.utils import DictObject
 from .. import http, pages
 
 class Page(DictObject):
-    def __init__(self, gallery=None, token=None, page=None, style=None, thumb=None, load=False):
+    def __init__(self, gallery=None, token=None, gallery_token=None, page=None, style=None, thumb=None, load=False):
         self.gallery = gallery
         self.token = token
         self.page = page
@@ -12,7 +12,7 @@ class Page(DictObject):
         self.thumb = thumb
         self.loaded = False
         self._gallery = None
-        self._gallery_token = None
+        self._gallery_token = gallery_token
         self._image = None
 
         self.type = 'background' if self.style else 'image'
@@ -73,6 +73,15 @@ class Page(DictObject):
                     self.gallery, self.gallery_token,
                     has_pages=self.get_needed_pages(self.page),
                 )
+            else:
+                missing = [
+                    x for x in self.get_needed_pages(self.page)
+                    if x not in self._gallery.pages
+                ]
+                if missing:
+                    self._gallery.pages.update(Gallery.from_id(
+                        self.gallery, self.gallery_token, has_pages=missing
+                    ).pages)
             self.loaded = True
 
     @property
