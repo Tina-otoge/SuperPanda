@@ -75,6 +75,9 @@
 				{% endif %}
 				<div class="meta">
 					<span class="date" title="{{ gallery.posted_at }}">{{ moment(gallery.posted_at).fromNow() }}</span>
+					{% if gallery.favorite %}
+					<span class="favorite" style="color:{{ gallery.favorite }}">&hearts;</span>
+					{% endif %}
 					<span class="pages">{{ gallery.pages_count }} pages</span>
 					<span class="rating">{{ gallery.rating }}⭐</span>
 				</div>

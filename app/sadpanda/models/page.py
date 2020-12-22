@@ -39,6 +39,10 @@ class Page(DictObject):
         return result
 
     @property
+    def full_title(self):
+        return 'Page #{0.page} of {0.extracted_title}'.format(self)
+
+    @property
     def url(self):
         return pages.GALLERY_PAGE_ROUTE.format(
             token=self.token, gallery=self.gallery, page=self.page
@@ -127,6 +131,12 @@ class Page(DictObject):
         if not self.loaded:
             self.load()
         return self._gallery.title
+
+    @property
+    def extracted_title(self):
+        if not self.loaded:
+            self.load()
+        return self._gallery.extracted_title
 
     @property
     def artist(self):

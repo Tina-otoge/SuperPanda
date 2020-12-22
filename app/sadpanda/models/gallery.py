@@ -14,6 +14,7 @@ PARENS_REGEXES = [
     r'{[^}]*}',
 ]
 BG_URL_REGEX = r'url\((https\:\/\/.*\.jpg)\)'
+BORDER_REGEX = r'border-color\:(.*);'
 
 class Gallery(DictObject):
     def __init__(self, *args, **kwargs):
@@ -128,6 +129,7 @@ class Gallery(DictObject):
             posted_at=cls.to_time(meta.contents[1].text),
             pages_count=cls.get_pages(meta.contents[4].text),
             category=cls.get_category(meta.contents[0]),
+            favorite=cls.get_favorite(meta.contents[1]),
             tags=[Tag.from_str(x.get('title')) for x in cls.find_tags(main)],
             rating=cls.get_rating(meta.contents[2]),
         )
@@ -256,6 +258,13 @@ class Gallery(DictObject):
     @staticmethod
     def get_background(soup):
         match = re.search(BG_URL_REGEX, soup.get('style'))
+        if not match:
+            return None
+        return match.group(1)
+
+    @staticmethod
+    def get_favorite(soup):
+        match = re.search(BORDER_REGEX, soup.get('style', ''))
         if not match:
             return None
         return match.group(1)
