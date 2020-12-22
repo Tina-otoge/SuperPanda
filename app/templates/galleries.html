@@ -3,6 +3,9 @@
 {% set search = request.args.get('search') %}
 
 {% block content %}
+
+{% if title %}<h1>{{ title }}</h1>{% endif %}
+
 <form id="galleries-search">
 	<div class="form-input">
 		<label for="search">Search</label>

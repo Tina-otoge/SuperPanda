@@ -14,7 +14,7 @@ PARENS_REGEXES = [
     r'\[[^\]]*\]',
     r'{[^}]*}',
 ]
-BG_URL_REGEX = r'url\((https\:\/\/ehgt\.org\/.*\.jpg)\)'
+BG_URL_REGEX = r'url\((https\:\/\/.*\.jpg)\)'
 
 class Gallery(DictObject):
     def __init__(self, *args, **kwargs):
@@ -143,10 +143,17 @@ class Gallery(DictObject):
             posted_at=cls.to_time(meta_list[0].text),
             pages_count=cls.get_pages(meta_list[5].text),
             pages={
+                #TODO: Fix crash when gallery previews are set to "Large" in
+                #      user settings (uses img instead of background)
                 p.page: p
                 for p in [
-                    Page.from_url_str(x.find('div').find('a').get('href'), style=x.find('div').get('style'))
-                    for x in pages.find_all('div', class_='gdtm')
+                    Page.from_url_str(
+                        x.find('div').find('a').get('href'),
+                        style=x.find('div').get('style')
+                    ) for x in (
+                        pages.find_all('div', class_='gdtm') +
+                        pages.find_all('div', class_='gdtl')
+                    )
                 ]
             },
             language=Tag.language(meta_list[3].text.split(' ')[0]),
@@ -193,7 +200,6 @@ class Gallery(DictObject):
             search=request.args.get('search', ''),
             category_filter=categories.to_filter(filters)
         ))
-        logging.debug(response.content)
         return cls.get_galleries_from_root(http.to_soup(response.content))
 
     @staticmethod
