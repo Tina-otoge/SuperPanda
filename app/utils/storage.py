@@ -4,8 +4,11 @@ class Storage:
     def __init__(self, path=None, default={}, write_on_read=False, indent=4):
         self.data = default
         if path:
-            with open(path) as f:
-                self.data = json.load(f)
+            try:
+                with open(path) as f:
+                    self.data = json.load(f)
+            except FileNotFoundError:
+                self.data = default
         self.path = path
         self.write_on_read = write_on_read
         self.json_args = {
