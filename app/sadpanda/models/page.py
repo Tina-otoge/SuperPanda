@@ -1,9 +1,10 @@
 from flask import url_for
 
+from app.utils import DictObject
 from .. import http, pages
 
-class Page:
-    def __init__(self, gallery=None, token=None, page=None, style=None, thumb=None):
+class Page(DictObject):
+    def __init__(self, gallery=None, token=None, page=None, style=None, thumb=None, load=False):
         self.gallery = gallery
         self.token = token
         self.page = page
@@ -16,6 +17,9 @@ class Page:
 
         self.type = 'background' if self.style else 'image'
 
+        if load:
+            self.load()
+
     def __repr__(self):
         return '<{0.__class__.__name__}: {1}>'.format(self, str(self))
 
@@ -23,7 +27,16 @@ class Page:
         return '{0.gallery}#{0.page}'.format(self)
 
     def to_json(self):
-        return self.url
+        result = super().to_json()
+        result.update({
+            'prev': str(self.prev),
+            'next': str(self.next),
+            'image': self.image,
+            'gallery_token': self.gallery_token,
+            'url': self.url,
+        })
+        del result['loaded']
+        return result
 
     @property
     def url(self):
@@ -35,7 +48,9 @@ class Page:
     def reader_url(self):
         return url_for(
             'main.reader',
-            gallery=self.gallery, token=self.token, page=self.page
+            id=self.gallery,
+            token=self.gallery_token,
+            page=self.page
         )
 
     def load(self):

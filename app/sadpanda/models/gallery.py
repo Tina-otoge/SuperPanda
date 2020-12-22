@@ -178,6 +178,7 @@ class Gallery(DictObject):
 
     @classmethod
     def from_id(cls, id, token, page=None, has_pages=[]):
+        page = page or http.get_page()
         pages_nb = [] if has_pages else [page - 1]
         for page in has_pages:
             page = (page - 1) // 40

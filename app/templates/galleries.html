@@ -74,7 +74,8 @@
 				<a href="{{ url_for('.galleries', search=gallery.artist) }}" class="artist" title="{{ gallery.full_artist }}">{{ gallery.full_artist }}</a>
 				{% endif %}
 				<div class="meta">
-					<span class="date">{{ moment(gallery.posted_at).fromNow() }}</span>
+					<span class="date" title="{{ gallery.posted_at }}">{{ moment(gallery.posted_at).fromNow() }}</span>
+					<span class="pages">{{ gallery.pages_count }} pages</span>
 					<span class="rating">{{ gallery.rating }}⭐</span>
 				</div>
 			</div>

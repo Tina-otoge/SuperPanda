@@ -72,6 +72,7 @@
 .gallery-entry .sub-infos .meta {
 	display: flex;
 	justify-content: space-between;
+	font-size: 0.8em;
 }
 
 .gallery-entry .super-tags .language {

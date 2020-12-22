@@ -17,3 +17,16 @@ def gallery(id, token):
 @main.route('/galleries/<int:id>-<string:token>/json')
 def gallery_json(id, token):
     return jsonify(Gallery.from_id(id, token))
+
+@main.route('/galleries/<int:id>-<string:token>/<int:page>')
+def reader(id, token, page):
+    return render_template(
+        'reader.html',
+        data=Gallery.from_id(id, token, has_pages=[page]).pages.get(page),
+    )
+
+@main.route('/galleries/<int:id>-<string:token>/<int:page>/json')
+def reader_json(id, token, page):
+    result = Gallery.from_id(id, token, has_pages=[page]).pages.get(page)
+    result.load()
+    return jsonify(result)
