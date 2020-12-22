@@ -6,6 +6,8 @@
 
 {% if title %}<h1>{{ title }}</h1>{% endif %}
 
+{% include "_nav.html" %}
+
 <form id="galleries-search">
 	<div class="form-input">
 		<label for="search">Search</label>
@@ -71,6 +73,10 @@
 				{% if gallery.full_artist %}
 				<a href="{{ url_for('.galleries', search=gallery.artist) }}" class="artist" title="{{ gallery.full_artist }}">{{ gallery.full_artist }}</a>
 				{% endif %}
+				<div class="meta">
+					<span class="date">{{ moment(gallery.posted_at).fromNow() }}</span>
+					<span class="rating">{{ gallery.rating }}⭐</span>
+				</div>
 			</div>
 		</div>
 		{% endwith %}

@@ -23,12 +23,16 @@ methods = {
     'POST': session.post,
 }
 
-def call(url: str, params={}, base_url=None, method='GET'):
+def build_url(url, base_url=None):
     base_url = base_url or (
         pages.SADPANDA_URL if store.get('sadpanda') else pages.EH_URL
     )
     if not url.startswith(('http://', 'https://')):
         url = urljoin(base_url, url)
+    return url
+
+def call(url: str, params={}, base_url=None, method='GET'):
+    url = build_url(url, base_url=base_url)
     logging.info('HTTP {} "{}" {}'.format(method, url, params))
     result = methods.get(method)(url, **params)
     if current_app.debug:

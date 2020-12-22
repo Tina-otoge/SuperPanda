@@ -6,9 +6,9 @@ function toggleFullscreen(elem = document.documentElement) {
 document.addEventListener('keydown', e => {
 	if (document.activeElement != document.body)
 		return;
-	if (e.key == 's')
+	if (['s', 'j'].includes(e.key))
 		window.scrollBy(0, 50);
-	if (['z', 'w'].includes(e.key))
+	if (['z', 'w', 'k'].includes(e.key))
 		window.scrollBy(0, -50);
 	if (['f'].includes(e.key))
 		toggleFullscreen();

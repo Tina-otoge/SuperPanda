@@ -2,5 +2,6 @@ flask
 beautifulsoup4
 requests
 flask-assets
+flask-moment
 fake-useragent
 pysocks

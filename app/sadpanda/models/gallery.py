@@ -2,7 +2,7 @@ from datetime import datetime
 import re
 from flask import url_for, request
 
-from .. import categories, http, pages
+from .. import categories, http, pages, tags
 from .tag import Tag
 from .page import Page
 from app.utils import DictObject
@@ -44,11 +44,12 @@ class Gallery(DictObject):
     @property
     def tags_by_namespaces(self):
         if not self._tags_by_namespace:
-            self._tags_by_namespace = {}
+            self._tags_by_namespace = {k: [] for k in tags.NAMESPACES_ORDER}
             for tag in self.tags:
                 if not tag.namespace in self._tags_by_namespace:
                     self._tags_by_namespace[tag.namespace] = []
                 self._tags_by_namespace[tag.namespace].append(tag)
+            self._tags_by_namespace = {k: v for k, v in self._tags_by_namespace.items() if v}
         return self._tags_by_namespace
 
     @property
@@ -107,6 +108,14 @@ class Gallery(DictObject):
     def first_page(self):
         return list(self.pages.values())[0]
 
+    @property
+    def last_page(self):
+        return list(self.pages.values())[-1]
+
+    @property
+    def full_url(self):
+        return http.build_url(self.url)
+
     @classmethod
     def from_galleries_soup(cls, soup):
         panel = soup.find('td', class_='gl1e')
@@ -144,8 +153,6 @@ class Gallery(DictObject):
             posted_at=cls.to_time(meta_list[0].text),
             pages_count=cls.get_pages(meta_list[5].text),
             pages={
-                #TODO: Fix crash when gallery previews are set to "Large" in
-                #      user settings (uses img instead of background)
                 p.page: p
                 for p in [
                     Page.from_url_str(

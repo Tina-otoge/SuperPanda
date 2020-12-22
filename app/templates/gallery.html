@@ -3,9 +3,9 @@
 {% set title = data.extracted_title %}
 
 {% block content %}
-<p>
-	<a id="back-to-home" href="{{ url_for('.galleries') }}">Back to home page</a>
-</p>
+
+{% include "_nav.html" %}
+
 <div id="gallery">
 	<div class="info">
 		<a href="{{ data.first_page.reader_url }}" class="cover">
@@ -42,8 +42,14 @@
 				</div>
 				{% endfor %}
 			</div>
+			<p class="rating">
+				{{ data.rating }}⭐
+			</p>
+			<p class="date">
+				{{ moment(data.posted_at).format() }} ({{ moment(data.posted_at).fromNow() }})
+			</p>
 			<div class="buttons">
-				<a href="{{ data.url }}" class="button">See on EH</a>
+				<a href="{{ data.full_url }}" class="button">See on EH</a>
 				<!-- <a class="button">Add to favorites</a> -->
 			</div>
 		</div>
@@ -58,7 +64,9 @@
 		<a href="{{ url_for('.gallery', id=data.id, token=data.token, page=page - 1) }}">Prev</a>
 		{% endif %}
 		<span class="current-page">{{ page }}</span>
+		{% if data.last_page.page != data.pages_count %}
 		<a href="{{ url_for('.gallery', id=data.id, token=data.token, page=page + 1) }}">Next</a>
+		{% endif %}
 	</div>
 </div>
 {% endblock %}
