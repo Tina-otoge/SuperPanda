@@ -45,7 +45,23 @@
 }
 
 .gallery-entry main, .gallery-entry .cover {
+	display: block;
 	width: 100%;
+	object-fit: contain;
+}
+
+.gallery-entry main .direct-read {
+	position: absolute;
+	height: 100%;
+	display: block;
+	right: 0;
+	top: 0;
+	width: 50px;
+	transition: var(--anim-short);
+}
+
+.gallery-entry main .direct-read:hover {
+	background-color: rgba(0, 0, 0, .5);
 }
 
 .gallery-entry .cover {
