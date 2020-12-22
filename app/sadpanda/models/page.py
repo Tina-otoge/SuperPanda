@@ -28,14 +28,17 @@ class Page(DictObject):
 
     def to_json(self):
         result = super().to_json()
+        if self.loaded:
+            result.update({
+                'prev': str(self.prev),
+                'next': str(self.next),
+                'image': self.image,
+                'gallery_token': self.gallery_token,
+            })
+        del result['loaded']
         result.update({
-            'prev': str(self.prev),
-            'next': str(self.next),
-            'image': self.image,
-            'gallery_token': self.gallery_token,
             'url': self.url,
         })
-        del result['loaded']
         return result
 
     @property
