@@ -34,7 +34,7 @@ def build_url(url, base_url=None):
 def call(url: str, params={}, base_url=None, method='GET'):
     url = build_url(url, base_url=base_url)
     # logging.info('HTTP {} "{}" {}'.format(method, url, params))
-    result = methods.get(method)(url, **params)
+    result = methods.get(method)(url, data=params)
     if current_app.debug:
         with open('./output.html', 'wb') as f:
             f.write(result.content)

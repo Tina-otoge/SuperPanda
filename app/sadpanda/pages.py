@@ -6,3 +6,5 @@ WATCHED_SEARCH_ROUTE = '/watched?page={page}&f_search={search}&f_cats={category_
 POPULAR_SEARCH_ROUTE = '/popular?page={page}&f_search={search}&f_cats={category_filter}'
 GALLERY_ROUTE = '/g/{id}/{token}/?p={page}'
 GALLERY_PAGE_ROUTE = '/s/{token}/{gallery}-{page}'
+GALLERY_ACTION_ROUTE = '/gallerypopups.php?gid={gallery}&t={token}&act={action}'
+FAVORITES_SEARCH_ROUTE = '/favorites.php?page={page}&favcat=all&f_search={search}&sn=on&st=on&sf=on'

@@ -40,3 +40,10 @@ def popular():
         title='What\'s hot',
         url=pages.POPULAR_SEARCH_ROUTE,
     )
+
+@main.route('/favorites')
+def favorites():
+    return galleries(
+        title='Your favs',
+        url=pages.FAVORITES_SEARCH_ROUTE,
+    )

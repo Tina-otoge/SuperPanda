@@ -28,7 +28,6 @@ Those are planned but not done yet.
 
 - Login to EH accounts using web UI (only manually pasting cookies currently)
 - Adding more settings other than theme, such as layout tweaks
-- Support viewing favorited galleries
 - Support viewing and posting comments
 
 ## Keyboard shortcuts reference

@@ -12,6 +12,7 @@ store = Storage('./data.json', write_on_read=True)
 def create_app():
     app = Flask(__name__)
     app.config['MOMENT_DEFAULT_FORMAT'] = 'LLL'
+    app.config['SECRET_KEY'] = 'wow'
     app.json_encoder = LenientJSONEncoder
     app.register_blueprint(main)
     Environment(app)

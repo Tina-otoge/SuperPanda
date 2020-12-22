@@ -53,7 +53,11 @@
 			</p>
 			<div class="buttons">
 				<a href="{{ data.full_url }}" class="button">See on EH</a>
-				<!-- <a class="button">Add to favorites</a> -->
+				{% if data.favorite %}
+				<a href="{{ url_for('.favorite_delete', id=data.id, token=data.token) }}" class="button">Favorite: {{ data.favorite }}</a>
+				{% else %}
+				<a href="{{ url_for('.favorite_add', id=data.id, token=data.token) }}" class="button">Add to favorites</a>
+				{% endif %}
 			</div>
 		</div>
 	</div>

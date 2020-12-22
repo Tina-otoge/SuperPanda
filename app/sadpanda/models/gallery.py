@@ -3,7 +3,7 @@ import logging
 import re
 from flask import url_for, request
 
-from .. import categories, http, pages, tags
+from .. import categories, http, pages, tags, favorites
 from .tag import Tag
 from .page import Page
 from app.utils import DictObject
@@ -15,6 +15,7 @@ PARENS_REGEXES = [
     r'{[^}]*}',
 ]
 BG_URL_REGEX = r'url\((https\:\/\/.*\.jpg)\)'
+BG_POSITION_REGEX = r'background-position\:0px -(\d*)px;'
 BORDER_REGEX = r'border-color\:(.*);'
 
 class Gallery(DictObject):
@@ -169,6 +170,7 @@ class Gallery(DictObject):
                     )
                 ]
             },
+            favorite=cls.get_favorite_from_container(meta.find('div', id='gdf')),
             language=Tag.language(meta_list[3].text.split(' ')[0]),
             category=cls.get_category(meta.find('div', id='gdc').find('div')),
             tags=[Tag.from_str(x.get('id')[3:]) for x in cls.find_tags(main)],
@@ -279,3 +281,14 @@ class Gallery(DictObject):
         if not match:
             return None
         return match.group(1)
+
+    @staticmethod
+    def get_favorite_from_container(soup):
+        fav = soup.find('div', id='fav')
+        icon = fav.find('div')
+        if not icon:
+            return None
+        match = re.search(BG_POSITION_REGEX, icon.get('style'))
+        if not match:
+            return None
+        return favorites.FAVORITES.get(int(match.group(1)) / 21)
