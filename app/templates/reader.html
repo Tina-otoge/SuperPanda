@@ -3,20 +3,20 @@
 {% block content %}
 <div id="reader">
 	<main>
-		<a href="{{ data.prev.reader_url }}" class="previous" style="{{ data.prev_style }}"></a>
+		{% with page = data.prev %}{% include "_preview.html" %}{% endwith %}
 		<a href="{{ data.next.reader_url }}" class="page">
 			<img src="{{ data.image }}">
 		</a>
-		<a href="{{ data.next.reader_url }}" class="next" style="{{ data.next_style }}"></a>
+		{% with page = data.next %}{% include "_preview.html" %}{% endwith %}
 	</main>
 	<div class="previews">
-		<a href="{{ data.prev.reader_url }}" class="previous" style="{{ data.prev_style }}"></a>
-		<a href="{{ data.next.reader_url }}" class="next" style="{{ data.next_style }}"></a>
+		{% with page = data.prev %}{% include "_preview.html" %}{% endwith %}
+		{% with page = data.next %}{% include "_preview.html" %}{% endwith %}
 	</div>
 	<div class="preload">
 	</div>
 	<footer>
-		<p>{{ data.page }} / {{ data.pages }}</p>
+		<p>{{ data.page }} / {{ data.pages_count }}</p>
 		<p>
 			<a id="back-to-gallery" href="{{ url_for('.gallery', id=data.gallery, token=data.gallery_token) }}">
 				Back to gallery
@@ -34,8 +34,8 @@
 		</a>
 		{% endif %}
 		<p class="all-previews">
-			{% for page in data.previews.values() %}
-			<a href="{{ page.reader_url }}" class="page" style="{{ page.style }}"></a>
+			{% for page in data.pages.values() %}
+			{% include "_preview.html" %}
 			{% endfor %}
 		</p>
 		<p class="tags">

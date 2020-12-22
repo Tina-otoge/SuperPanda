@@ -1,0 +1,17 @@
+{% with current_page = data.page if data|type == 'Page' else -1 %}
+<a
+	href="{{ page.reader_url }}"
+	class="
+		preview
+		{% if page.page == current_page %}current{% endif %}
+		{% if page.page == current_page - 1 %}previous{% endif %}
+		{% if page.page == current_page + 1 %}next{% endif %}
+	"
+	data-thing="{{ data|type }}"
+	style="{{ page.style }}"
+>
+	{% if page.type == 'image' %}
+	<img src="{{ page.thumb }}">
+	{% endif %}
+</a>
+{% endwith %}

@@ -27,9 +27,13 @@
 	margin: auto;
 }
 
-#reader .page img {
+#reader main .page img {
 	max-width: 100%;
 	height: 100vh;
+	object-fit: contain;
+}
+
+#reader main .preview img {
 	object-fit: contain;
 }
 
@@ -40,6 +44,20 @@
 #reader footer .all-previews {
 	display: flex;
 	flex-flow: wrap row;
+	justify-content: space-around;
+}
+
+#reader footer .all-previews .preview {
+	margin: .5em;
+}
+
+#reader footer .all-previews .current.preview {
+	border: 2px solid var(--blue);
+}
+
+#reader footer .all-previews img {
+	max-width: 200px;
+	display: block;
 }
 
 #reader footer .tag {

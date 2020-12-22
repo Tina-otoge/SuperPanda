@@ -11,9 +11,9 @@ def gallery(id, token):
         'gallery.html',
         title='Gallery',
         page=page,
-        data=Gallery.get_gallery_from_id_token(id, token, page=page),
+        data=Gallery.from_id(id, token, page=page),
     )
 
 @main.route('/galleries/<int:id>-<string:token>/json')
 def gallery_json(id, token):
-    return jsonify(Gallery.get_gallery_from_id_token(id, token))
+    return jsonify(Gallery.from_id(id, token))

@@ -1,5 +1,4 @@
 from datetime import datetime
-import logging
 import re
 from flask import url_for, request
 
@@ -34,6 +33,8 @@ class Gallery(DictObject):
                 self.parody = tag
         if ('id' not in kwargs or 'token' not in kwargs) and 'url' in kwargs:
             self.id, self.token = self.tokens_from_url(self.url)
+        for page in getattr(self, 'pages', {}).values():
+            page._gallery = self
         self._tags_by_namespace = None
         self._extracted_title = None
         self._extracted_artist = None
@@ -150,14 +151,16 @@ class Gallery(DictObject):
                     Page.from_url_str(
                         x.find('div').find('a').get('href'),
                         style=x.find('div').get('style')
-                    ) for x in (
+                    ) if x.find('div') else
+                    Page.from_link_with_img(x.find('a'))
+                    for x in (
                         pages.find_all('div', class_='gdtm') +
                         pages.find_all('div', class_='gdtl')
                     )
                 ]
             },
             language=Tag.language(meta_list[3].text.split(' ')[0]),
-            cateogry=cls.get_category(meta.find('div', id='gdc').find('div')),
+            category=cls.get_category(meta.find('div', id='gdc').find('div')),
             tags=[Tag.from_str(x.get('id')[3:]) for x in cls.find_tags(main)],
             parent_url=parent_url,
             rating=cls.get_rating(meta.find('div', id='rating_image')),
@@ -167,7 +170,7 @@ class Gallery(DictObject):
         )
 
     @classmethod
-    def get_gallery_from_id_token(cls, id, token, page=None, has_pages=[]):
+    def from_id(cls, id, token, page=None, has_pages=[]):
         pages_nb = [] if has_pages else [page - 1]
         for page in has_pages:
             page = (page - 1) // 40

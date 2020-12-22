@@ -40,10 +40,16 @@
 	display: flex;
 	flex-flow: wrap row;
 	margin: 1em 0;
+	justify-content: space-around;
 }
 
-#gallery .page {
+#gallery .preview {
 	margin: .5em;
+}
+
+#gallery .preview img {
+	max-width: 150px;
+	display: block;
 }
 
 #gallery .tags-group {

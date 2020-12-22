@@ -3,19 +3,18 @@ from flask import url_for
 from .. import http, pages
 
 class Page:
-    def __init__(self, gallery=None, token=None, page=None, style=None):
+    def __init__(self, gallery=None, token=None, page=None, style=None, thumb=None):
         self.gallery = gallery
         self.token = token
         self.page = page
-        self.style = style
+        self.style = style or ''
+        self.thumb = thumb
         self.loaded = False
         self._gallery = None
-        self._image = None
-        self._prev = None
-        self._prev_style = None
-        self._next = None
-        self._next_style = None
         self._gallery_token = None
+        self._image = None
+
+        self.type = 'background' if self.style else 'image'
 
     def __repr__(self):
         return '<{0.__class__.__name__}: {1}>'.format(self, str(self))
@@ -28,7 +27,7 @@ class Page:
 
     @property
     def url(self):
-        return pages.GALLERY_PAGE_URL.format(
+        return pages.GALLERY_PAGE_ROUTE.format(
             token=self.token, gallery=self.gallery, page=self.page
         )
 
@@ -43,21 +42,24 @@ class Page:
         if not self.loaded:
             from .gallery import Gallery
             soup = http.to_soup(http.call(self.url).content)
-            self._image = self.get_image(soup)
-            self._prev = self.__class__.from_url_str(soup.find('a', id='prev').get('href'))
-            self._next = self.__class__.from_url_str(soup.find('a', id='next').get('href'))
             self._gallery_token = self.get_gallery_token(
                 soup.find('div', id='i5').find('a')
             )
-            index = self.page
-            self._gallery = Gallery.get_gallery_from_id_token(
-                self.gallery, self._gallery_token,
-                has_pages=[index - 1, index, index + 1],
-            )
-            self._prev_style = self._gallery.pages[index - 1].style if index > 1 else ''
-            self._next_style = self._gallery.pages[index + 1].style if index < self._gallery.pages_count else ''
-            self._preloaded_image = None
+            self._image = self.get_image(soup)
+            if not getattr(self, '_gallery', False):
+                self._gallery = Gallery.from_id(
+                    self.gallery, self.gallery_token,
+                    has_pages=self.get_needed_pages(self.page),
+                )
             self.loaded = True
+
+    @property
+    def gallery_token(self):
+        if self._gallery_token:
+            return self._gallery_token
+        if self._gallery:
+            return self._gallery.token
+        return None
 
 
     @property
@@ -70,7 +72,7 @@ class Page:
         return self._preloaded_image
 
     @property
-    def previews(self):
+    def pages(self):
         if not self.loaded:
             self.load()
         return self._gallery.pages
@@ -85,28 +87,16 @@ class Page:
     def prev(self):
         if not self.loaded:
             self.load()
-        return self._prev
-
-    @property
-    def prev_style(self):
-        if not self.loaded:
-            self.load()
-        return self._prev_style
+        return self._gallery.pages.get(self.page - 1)
 
     @property
     def next(self):
         if not self.loaded:
             self.load()
-        return self._next
+        return self._gallery.pages.get(self.page + 1)
 
     @property
-    def next_style(self):
-        if not self.loaded:
-            self.load()
-        return self._next_style
-
-    @property
-    def pages(self):
+    def pages_count(self):
         if not self.loaded:
             self.load()
         return self._gallery.pages_count
@@ -129,21 +119,37 @@ class Page:
             self.load()
         return self._gallery.artist
 
-    @property
-    def gallery_token(self):
-        if not self.loaded:
-            self.load()
-        return self._gallery_token
-
     @classmethod
     def from_url_str(cls, s, *args, **kwargs):
-        token, leftover = s.split('/')[-2:]
-        gallery, page = leftover.split('-')
-        return cls(*args, gallery=gallery, token=token, page=int(page), **kwargs)
+        token, gallery, page = cls.get_ids_from_url(s)
+        return cls(*args, gallery=gallery, token=token, page=page, **kwargs)
+
+    @classmethod
+    def from_link_with_img(cls, soup):
+        token, gallery, page = cls.get_ids_from_url(soup.get('href'))
+        return cls(
+            gallery=gallery, token=token, page=page,
+            thumb=soup.find('img').get('src')
+        )
+
+
+    @classmethod
+    def from_gallery_id(cls, gallery_id, gallery_token, page, *args, **kwargs):
+        gallery = Gallery.from_id(
+            gallery_id, gallery_token,
+            has_pages=cls.get_needed_pages(page),
+        )
+        return gallery.pages.get(page)
 
     @classmethod
     def from_url(cls, url):
         response = http.get(url)
+
+    @staticmethod
+    def get_needed_pages(index):
+        if index == 1:
+            return [index, index + 1]
+        return [index - 1, index, index + 1]
 
     @staticmethod
     def get_gallery_token(soup):
@@ -152,3 +158,9 @@ class Page:
     @staticmethod
     def get_image(soup):
         return soup.find('img', id='img').get('src')
+
+    @staticmethod
+    def get_ids_from_url(url):
+        token, leftover = url.split('/')[-2:]
+        gallery, page = leftover.split('-')
+        return token, gallery, int(page)

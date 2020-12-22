@@ -50,11 +50,7 @@
 	</div>
 	<div class="pages">
 		{% for page in data.pages.values() %}
-		<a
-			href="{{ page.reader_url }}"
-			class="page"
-			style="{{ page.style }}">
-		</a>
+		{% include "_preview.html" %}
 		{% endfor %}
 	</div>
 	<div class="pager">
