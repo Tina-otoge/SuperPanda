@@ -15,6 +15,7 @@ CSS, so I decided to rewrite entirely the HTML of the site.
 - Keyboard shortcuts everywhere
 - Theme system
 - Responsive galleries list, use it on desktop, mobile or tablets
+- Go to the first page of a gallery by clicking on the right edge of the cover
 - Distraction free and always full size reader
 - Turn pages using your left hand so you can keep your right hand free :eyes:
 - Easy to read and understand HTML structure and classes, easy custom themes!
@@ -37,14 +38,15 @@ Key         | Page           | Action
 f           | Everywhere     | Toggle fullscreen
 k/w/z       | Everywhere     | Scroll up
 j/s         | Everywhere     | scroll down
-a/q/h/left  | Reader         | Go to previous page
-d/l/right   | Reader         | Go to next page
-g/backspace | Reader         | Go back to gallery
-e/t         | Reader/Gallery | Go back to home
+e           | Galleries list | Adds "language:english" to the current search
 c           | Gallery        | Search galleries by first character
 a           | Gallery        | Search galleries by first artist
 g           | Gallery        | Search galleries by first group
 p           | Gallery        | Search galleries by first parody
+a/q/h/left  | Reader         | Go to previous page
+d/l/right   | Reader         | Go to next page
+g/backspace | Reader         | Go back to gallery
+e/t         | Reader/Gallery | Go back to home
 
 ## Running
 
