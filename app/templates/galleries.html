@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% set json = url_for('.galleries_json') %}
 {% set search = request.args.get('search') %}
+{% set route = route or '.galleries' %}
 
 {% block content %}
 

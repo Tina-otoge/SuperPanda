@@ -6,7 +6,7 @@ from app.sadpanda.categories import FILTERS
 from app.sadpanda.models import Gallery
 
 @main.route('/galleries/')
-def galleries(url=pages.GALLERIES_SEARCH_ROUTE, filters=None, title=None):
+def galleries(url=pages.GALLERIES_SEARCH_ROUTE, filters=None, title=None, *args, **kwargs):
     filters = http.get_filters() if filters is None else filters
     page = http.get_page()
     response = make_response(render_template(
@@ -16,6 +16,7 @@ def galleries(url=pages.GALLERIES_SEARCH_ROUTE, filters=None, title=None):
         data=Gallery.get_galleries(url=url, page=page, filters=filters),
         filters_list=FILTERS,
         filters=filters,
+        **kwargs,
     ))
     request_filters = http.get_filters(request_only=True)
     if request_filters:
@@ -32,6 +33,7 @@ def watched():
         title='Watched',
         url=pages.WATCHED_SEARCH_ROUTE,
         filters=[],
+        route='.watched',
     )
 
 @main.route('/popular')
@@ -39,6 +41,7 @@ def popular():
     return galleries(
         title='What\'s hot',
         url=pages.POPULAR_SEARCH_ROUTE,
+        route='.popular',
     )
 
 @main.route('/favorites')
@@ -46,4 +49,5 @@ def favorites():
     return galleries(
         title='Your favs',
         url=pages.FAVORITES_SEARCH_ROUTE,
+        route='.favorites',
     )
