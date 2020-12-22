@@ -7,7 +7,6 @@
 		{% if page.page == current_page - 1 %}previous{% endif %}
 		{% if page.page == current_page + 1 %}next{% endif %}
 	"
-	data-thing="{{ data|type }}"
 	style="{{ page.style }}"
 >
 	{% if page.type == 'image' %}
