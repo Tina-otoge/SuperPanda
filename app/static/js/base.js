@@ -1,3 +1,17 @@
+// https://stackoverflow.com/a/5448595
+function findGetParameter(parameterName) {
+	var result = null,
+		tmp = [];
+	location.search
+		.substr(1)
+		.split("&")
+		.forEach(function (item) {
+  			tmp = item.split("=");
+  			if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+		});
+	return result;
+}
+
 function toggleFullscreen(elem = document.documentElement) {
 	if (document.fullscreenElement)
 		return document.exitFullscreen();
@@ -28,6 +42,17 @@ if (galleries) {
 			e.checked = !current;
 		});
 	};
+	document.addEventListener('keydown', e => {
+		if (e.key == 'e') {
+			let current_search = findGetParameter('search');
+			if (current_search)
+				current_search += ' '
+			location.href = (
+				location.origin + location.pathname +
+				'?search=' + encodeURIComponent(current_search + ' language:english')
+			);
+		}
+	});
 }
 
 const gallery = document.getElementById('gallery');
