@@ -1,3 +1,4 @@
+import logging
 from flask import url_for
 
 from app.utils import DictObject
@@ -68,7 +69,8 @@ class Page(DictObject):
                 soup.find('div', id='i5').find('a')
             )
             self._image = self.get_image(soup)
-            if not getattr(self, '_gallery', False):
+            if not self._gallery:
+                logging.debug('Page did not have a gallery attached')
                 self._gallery = Gallery.from_id(
                     self.gallery, self.gallery_token,
                     has_pages=self.get_needed_pages(self.page),
@@ -78,6 +80,7 @@ class Page(DictObject):
                     x for x in self.get_needed_pages(self.page)
                     if x not in self._gallery.pages
                 ]
+                logging.debug('Requesting missing pages {}'.format(missing))
                 if missing:
                     self._gallery.pages.update(Gallery.from_id(
                         self.gallery, self.gallery_token, has_pages=missing

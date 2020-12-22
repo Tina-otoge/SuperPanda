@@ -1,4 +1,5 @@
 from datetime import datetime
+import logging
 import re
 from flask import url_for, request
 
@@ -180,9 +181,11 @@ class Gallery(DictObject):
 
     @classmethod
     def from_id(cls, id, token, page=None, has_pages=[]):
+        logging.debug('Creating gallery from ID')
         page = (page or http.get_page()) - 1
         missing = []
         url=pages.GALLERY_ROUTE.format(id=id, token=token, page=page)
+        logging.debug('Requesting base gallery')
         result = cls.from_gallery_soup(
             http.to_soup(http.call(url).content),
             id=id, token=token, url=url,
@@ -196,7 +199,7 @@ class Gallery(DictObject):
             pages.GALLERY_ROUTE.format(id=id, token=token, page=page)
             for page in missing
         ]
-        responses = [http.call(url) for url in urls]
+        logging.debug('Requesting additional gallery pages {}'.format(missing))
         for url in urls:
             result.pages.update(
                 cls.from_gallery_soup(

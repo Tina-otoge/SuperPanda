@@ -20,9 +20,12 @@ def gallery_json(id, token):
 
 @main.route('/galleries/<int:id>-<string:token>/<int:page>')
 def reader(id, token, page):
+    gallery = Gallery.from_id(id, token, has_pages=[page])
+    result = gallery.pages.get(page)
+    result._gallery = gallery
     return render_template(
         'reader.html',
-        data=Gallery.from_id(id, token, has_pages=[page]).pages.get(page),
+        data=result,
     )
 
 @main.route('/galleries/<int:id>-<string:token>/<int:page>/json')
