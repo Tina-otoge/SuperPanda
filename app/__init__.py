@@ -8,12 +8,6 @@ from app.utils import LenientJSONEncoder, Storage
 main = Blueprint('main', __name__)
 store = Storage('./data.json')
 
-@main.app_template_filter('refresh')
-def refresh_filter(x):
-    if not current_app.debug:
-        return x
-    return '{}?{}'.format(x, str(random.random())[2:8])
-
 def create_app():
     app = Flask(__name__)
     app.json_encoder = LenientJSONEncoder
