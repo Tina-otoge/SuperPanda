@@ -72,7 +72,7 @@ flask run
 Environment variables:
 - You can change the port using `FLASK_RUN_PORT`
 - You can enable debug mode by setting `FLASK_DEBUG`
-- You createcan change the IP address to bind to using `FLASK_RUN_HOST`
+- You can change the IP address to bind to using `FLASK_RUN_HOST`
 
 ## Screenshots
 
