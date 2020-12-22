@@ -79,7 +79,7 @@
 					<span class="favorite" style="color:{{ gallery.favorite }}">&hearts;</span>
 					{% endif %}
 					<span class="pages">{{ gallery.pages_count }} pages</span>
-					<span class="rating">{{ gallery.rating }}⭐</span>
+					{% with rating = gallery.rating %}{% include "_rating.html" %}{% endwith %}
 				</div>
 			</div>
 		</div>

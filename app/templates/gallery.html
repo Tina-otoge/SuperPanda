@@ -42,8 +42,8 @@
 				</div>
 				{% endfor %}
 			</div>
-			<p class="rating">
-				{{ data.rating }}⭐
+			<p class="rating-container">
+				{% with rating = data.rating %}{% include "_rating.html" %}{% endwith %}
 			</p>
 			<p class="pages-count">
 				{{ data.pages_count }} pages

@@ -52,7 +52,7 @@
 }
 
 #reader footer .all-previews .current.preview {
-	border: 2px solid var(--blue);
+	border: 5px solid var(--blue);
 }
 
 #reader footer .all-previews img {
