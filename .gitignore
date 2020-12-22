@@ -3,3 +3,5 @@ __pycache__/
 
 /app/static/bundle.css
 .webassets-cache/
+/data.json
+/output.html

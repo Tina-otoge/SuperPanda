@@ -1,3 +1,8 @@
-GALLERIES_SEARCH_URL = 'https://e-hentai.org/?page={page}&f_search={search}&f_cats={category_filter}'
-GALLERY_URL = 'https://e-hentai.org/g/{id}/{token}/?p={page}'
-GALLERY_PAGE_URL = 'https://e-hentai.org/s/{token}/{gallery}-{page}'
+EH_URL = 'https://e-hentai.org'
+SADPANDA_URL = 'https://exhentai.org'
+
+GALLERIES_SEARCH_ROUTE = '/?page={page}&f_search={search}&f_cats={category_filter}'
+WATCHED_SEARCH_ROUTE = '/watched?page={page}&f_search={search}&f_cats={category_filter}'
+POPULAR_SEARCH_ROUTE = '/popular?page={page}&f_search={search}&f_cats={category_filter}'
+GALLERY_ROUTE = '/g/{id}/{token}/?p={page}'
+GALLERY_PAGE_ROUTE = '/s/{token}/{gallery}-{page}'

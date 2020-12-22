@@ -1,19 +1,40 @@
+import logging
+from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 import requests
 from fake_useragent import UserAgent
-from flask import request
-import json
+from flask import current_app, request
 
-from . import categories
+from app import store
+from . import categories, pages
 
 session = requests.session()
 session.headers.update({'User-Agent': str(UserAgent().chrome)})
 session.cookies.update({'sl': 'dm_2'})
 session.cookies.update({'nw': '1'})
 session.cookies.update({
-    'ipb_member_id': '',
-    'ipb_pass_hash': '',
+    'ipb_member_id': store.get('member_id'),
+    'ipb_pass_hash': store.get('pass_hash'),
+    'sk': store.get('sk'),
 })
+
+methods = {
+    'GET': session.get,
+    'POST': session.post,
+}
+
+def call(url: str, params={}, base_url=None, method='GET'):
+    base_url = base_url or (
+        pages.SADPANDA_URL if store.get('sadpanda') else pages.EH_URL
+    )
+    if not url.startswith(('http://', 'https://')):
+        url = urljoin(base_url, url)
+    logging.info('HTTP {} "{}" {}'.format(method, url, params))
+    result = methods.get(method)(url, **params)
+    if current_app.debug:
+        with open('./output.html', 'wb') as f:
+            f.write(result.content)
+    return result
 
 def encode_list(l):
     return ','.join(l)

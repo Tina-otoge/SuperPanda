@@ -1,4 +1,5 @@
 from datetime import datetime
+import logging
 import re
 from flask import url_for, request
 
@@ -165,8 +166,8 @@ class Gallery(DictObject):
             page = (page - 1) // 40
             if page not in pages_nb:
                 pages_nb.append(page)
-        urls = [pages.GALLERY_URL.format(id=id, token=token, page=page) for page in pages_nb]
-        responses = [http.session.get(url) for url in urls]
+        urls = [pages.GALLERY_ROUTE.format(id=id, token=token, page=page) for page in pages_nb]
+        responses = [http.call(url) for url in urls]
         result = cls.from_gallery_soup(
             http.to_soup(responses[0].content),
             id=id, token=token, url=urls[0]
@@ -185,14 +186,14 @@ class Gallery(DictObject):
         return [cls.from_galleries_soup(x) for x in table.contents if x.find(class_='gl1e')]
 
     @classmethod
-    def get_galleries(cls, page=1):
-        response = http.session.get(pages.GALLERIES_SEARCH_URL.format(
+    def get_galleries(cls, url=pages.GALLERIES_SEARCH_ROUTE, page=1, filters=None):
+        filters = http.get_filters() if filters is None else filters
+        response = http.call(url.format(
             page=page - 1,
             search=request.args.get('search', ''),
-            category_filter=categories.to_filter(
-                http.get_filters()
-            )
+            category_filter=categories.to_filter(filters)
         ))
+        logging.debug(response.content)
         return cls.get_galleries_from_root(http.to_soup(response.content))
 
     @staticmethod
@@ -233,7 +234,7 @@ class Gallery(DictObject):
 
     @staticmethod
     def get_category(soup):
-        return soup.get('onclick').split('/')[-1][:-1]
+        return soup.text.lower().replace(' ', '')
 
     @staticmethod
     def get_background(soup):

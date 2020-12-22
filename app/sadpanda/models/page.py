@@ -42,7 +42,7 @@ class Page:
     def load(self):
         if not self.loaded:
             from .gallery import Gallery
-            soup = http.to_soup(http.session.get(self.url).content)
+            soup = http.to_soup(http.call(self.url).content)
             self._image = self.get_image(soup)
             self._prev = self.__class__.from_url_str(soup.find('a', id='prev').get('href'))
             self._next = self.__class__.from_url_str(soup.find('a', id='next').get('href'))
@@ -65,7 +65,7 @@ class Page:
         if not self.loaded:
             self.load()
         if self._preloaded_image is None:
-            soup = http.to_soup(http.session.get(self.next.url).content)
+            soup = http.to_soup(http.call(self.next.url).content)
             self._preloaded_image = self.get_image(soup)
         return self._preloaded_image
 
