@@ -43,6 +43,8 @@ if (galleries) {
 		});
 	};
 	document.addEventListener('keydown', e => {
+		if (document.activeElement != document.body)
+			return;
 		if (e.key == 'e') {
 			let current_search = findGetParameter('search');
 			if (current_search)
