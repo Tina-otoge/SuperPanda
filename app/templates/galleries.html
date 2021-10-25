@@ -35,9 +35,12 @@
 	<a href="{{ url_for('.set_theme', name='dark') }}">Dark theme</a>
 	<a href="{{ url_for('.set_theme', name='default') }}">Default theme</a>
 </p>
+<p>
+	Total: {{ data.total }} ({{ data.size }} here)
+</p>
 {% include "_pager.html" %}
 <div id="galleries">
-	{% for gallery in data %}
+	{% for gallery in data.results %}
 		{% with url = url_for('.gallery', id=gallery.id, token=gallery.token) %}
 		<div class="gallery-entry {{ gallery.category }}">
 			<a href="{{ url }}" class="title">{{ gallery.title }}</a>

@@ -215,8 +215,22 @@ class Gallery(DictObject):
     def get_galleries_from_root(cls, soup):
         table = soup.find(class_=['itg', 'glte'])
         if not table:
-            return []
-        return [cls.from_galleries_soup(x) for x in table.contents if x.find(class_='gl1e')]
+            galleries = []
+        else:
+            galleries = [cls.from_galleries_soup(x) for x in table.contents if x.find(class_='gl1e')]
+        total_results = None
+        for word in soup.find(class_='ip').text.replace(',', '').split(' '):
+            try:
+                total_results = int(word)
+                break
+            except ValueError:
+                continue
+        this_results = len(galleries)
+        return {
+            'total': total_results,
+            'size': this_results,
+            'results': galleries,
+        }
 
     @classmethod
     def get_galleries(cls, url=pages.GALLERIES_SEARCH_ROUTE, page=1, filters=None):
@@ -247,7 +261,11 @@ class Gallery(DictObject):
         """
         Finds the gallery tags in a soup
         """
-        return soup.find_all('div', class_='gtl') + soup.find_all('div', class_='gt')
+        return (
+            soup.find_all('div', class_='gtl')
+            + soup.find_all('div', class_='gt')
+            + soup.find_all('div', class_='gtw')
+        )
 
     @staticmethod
     def to_time(text):
