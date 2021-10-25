@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% set json = url_for('.reader_json', id=data.gallery, token=data.gallery_token, page=data.page) %}
 {% set title = data.full_title %}
+{% set body_class = "reader" %}
 
 {% block content %}
 <div id="reader">

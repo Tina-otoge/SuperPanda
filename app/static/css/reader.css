@@ -1,3 +1,7 @@
+body.reader {
+	max-width: 100%;
+}
+
 #reader main {
 	display: flex;
 	flex-direction: row;

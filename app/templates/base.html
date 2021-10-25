@@ -24,7 +24,7 @@
 		{% endif %}
 	</head>
 
-	<body>
+	<body class="{{ body_class }}">
 
 		<div id="flash-messages">
 			{% for message in get_flashed_messages() %}
