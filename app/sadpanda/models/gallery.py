@@ -219,12 +219,13 @@ class Gallery(DictObject):
         else:
             galleries = [cls.from_galleries_soup(x) for x in table.contents if x.find(class_='gl1e')]
         total_results = None
-        for word in soup.find(class_='ip').text.replace(',', '').split(' '):
-            try:
-                total_results = int(word)
-                break
-            except ValueError:
-                continue
+        if count := soup.find(class_='ip'):
+            for word in count.text.replace(',', '').split(' '):
+                try:
+                    total_results = int(word)
+                    break
+                except ValueError:
+                    continue
         this_results = len(galleries)
         return {
             'total': total_results,
