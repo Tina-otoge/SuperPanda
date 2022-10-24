@@ -1,8 +1,10 @@
-from flask import redirect, url_for
+import flask
 
-from app import main
-from . import gallery, listing, settings
+from app import app
 
-@main.route('/')
+from . import gallery
+
+
+@app.route("/")
 def index():
-    return redirect(url_for('.galleries'))
+    return flask.url_for("galleries")

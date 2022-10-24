@@ -1,7 +1,0 @@
-<div class="pager">
-	{% if page > 1 %}
-	<a href="{{ url_for(route, search=search, page=page - 1) }}">Prev</a>
-	{% endif %}
-	<span class="current-page">{{ page }}</span>
-	<a href="{{ url_for(route, search=search, page=page + 1) }}">Next</a>
-</div>

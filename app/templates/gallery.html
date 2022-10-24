@@ -1,79 +1,22 @@
-{% extends "base.html" %}
-{% set json = url_for('.gallery_json', id=data.id, token=data.token) %}
-{% set title = data.extracted_title %}
+<a href="{{ url_for('galleries')}}">Back to galleries</a>
 
-{% block content %}
+<pre style="max-width: 100vw; white-space: pre-wrap; word-wrap: break-word;">
+    {{ gallery }}
+</pre>
 
-{% include "_nav.html" %}
-
-<div id="gallery">
-	<div class="info">
-		<a href="{{ data.first_page.reader_url }}" class="cover">
-			<img src="{{ data.cover_url }}">
-		</a>
-		<div class="meta">
-			<header>
-				<h1 class="title">
-					{{ title }}
-				</h1>
-				<span class="artist">
-					{% if data.artist %}
-					<a href="{{ url_for('.galleries', search=data.artist) }}">
-						{{ data.artist.value }}
-					</a>
-					{% endif %}
-					{% if data.group_not_artist %}
-					<a href="{{ url_for('.galleries', search=data.group_not_artist) }}" class="group">
-						({{ data.group_not_artist.value }})
-					</a>
-					{% endif %}
-				</span>
-				{% if data.title != data.extracted_title %}
-				<div class="actual-title">{{ data.title }}</div>
-				{% endif %}
-			</header>
-			<div class="tags">
-				{% for namespace, tags in data.tags_by_namespaces.items() %}
-				<div class="tags-group {{ namespace }}">
-					<span class="namespace">{{ namespace }}:</span>
-					{% for tag in tags %}
-					<a href="{{ url_for('.galleries', search=tag) }}" class="tag">{{ tag.value }}</a>
-					{% endfor %}
-				</div>
-				{% endfor %}
-			</div>
-			<p class="rating-container">
-				{% with rating = data.rating %}{% include "_rating.html" %}{% endwith %}
-			</p>
-			<p class="pages-count">
-				{{ data.pages_count }} pages
-			</p>
-			<p class="date">
-				{{ moment(data.posted_at).format() }} ({{ moment(data.posted_at).fromNow() }})
-			</p>
-			<div class="buttons">
-				<a href="{{ data.full_url }}" class="button">See on EH</a>
-				{% if data.favorite %}
-				<a href="{{ url_for('.favorite_delete', id=data.id, token=data.token) }}" class="button">Favorite: {{ data.favorite }}</a>
-				{% else %}
-				<a href="{{ url_for('.favorite_add', id=data.id, token=data.token) }}" class="button">Add to favorites</a>
-				{% endif %}
-			</div>
-		</div>
-	</div>
-	<div class="pages">
-		{% for page in data.pages.values() %}
-		{% include "_preview.html" %}
-		{% endfor %}
-	</div>
-	<div class="pager">
-		{% if page > 1 %}
-		<a href="{{ url_for('.gallery', id=data.id, token=data.token, page=page - 1) }}">Prev</a>
-		{% endif %}
-		<span class="current-page">{{ page }}</span>
-		{% if data.last_page.page != data.pages_count %}
-		<a href="{{ url_for('.gallery', id=data.id, token=data.token, page=page + 1) }}">Next</a>
-		{% endif %}
-	</div>
-</div>
-{% endblock %}
+{% for preview in previews.values() %}
+<a href="{{ url_for(
+        'gallery_page',
+        id=gallery.id,
+        token=gallery.token,
+        page=preview.page,
+        page_token=preview.page_token,
+    ) }}">
+    <div style="
+        width: {{ preview.width }}px;    
+        height: {{ preview.height }}px;
+        background-image: url({{ preview.url }});
+        background-position-x: {{ preview.offset_x }}px;
+    "></div>
+</a>
+{% endfor %}

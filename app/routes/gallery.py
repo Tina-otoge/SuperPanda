@@ -1,62 +1,28 @@
-import logging
-from flask import jsonify, redirect, render_template, url_for
+import flask
 
-from app import main
-from app.sadpanda import http, pages
-from app.sadpanda.models import Gallery
+from app import app, eh
 
-GALLERY_ID = '<int:id>-<string:token>'
 
-@main.route('/galleries/{}'.format(GALLERY_ID))
+@app.route("/galleries/")
+def galleries():
+    galleries = eh.get_galleries()
+    return flask.render_template("galleries.html", galleries=galleries)
+
+
+@app.route("/galleries/<int:id>-<token>/")
 def gallery(id, token):
-    page = http.get_page()
-    return render_template(
-        'gallery.html',
-        title='Gallery',
-        page=page,
-        data=Gallery.from_id(id, token, page=page),
+    gallery = eh.get_gallery(id, token)
+    previews = eh.get_previews(id, token)
+    return flask.render_template(
+        "gallery.html", gallery=gallery, previews=previews
     )
 
-@main.route('/galleries/{}/json'.format(GALLERY_ID))
-def gallery_json(id, token):
-    return jsonify(Gallery.from_id(id, token))
 
-@main.route('/galleries/{}/<int:page>'.format(GALLERY_ID))
-def reader(id, token, page):
-    gallery = Gallery.from_id(id, token, has_pages=[page])
-    result = gallery.pages.get(page)
-    result._gallery = gallery
-    return render_template(
-        'reader.html',
-        data=result,
+@app.route("/galleries/<int:id>-<token>/<int:page>-<page_token>")
+def gallery_page(id, token, page, page_token):
+    gallery = eh.get_gallery(id, token)
+    previews = eh.get_previews(id, token)
+    img = eh.get_page(id, page, page_token)
+    return flask.render_template(
+        "reader.html", gallery=gallery, previews=previews, img=img
     )
-
-@main.route('/galleries/{}/<int:page>/json'.format(GALLERY_ID))
-def reader_json(id, token, page):
-    result = Gallery.from_id(id, token, has_pages=[page]).pages.get(page)
-    result.load()
-    return jsonify(result)
-
-@main.route('/favorites/{}/add'.format(GALLERY_ID))
-def favorite_add(id, token):
-    target = pages.GALLERY_ACTION_ROUTE.format(
-        gallery=id, token=token, action='addfav',
-    )
-    result = http.call(target, method='POST', params={
-        'favcat': 1,
-        'apply': True,
-        'update': 1,
-    })
-    return redirect(url_for('.gallery', id=id, token=token))
-
-@main.route('/favorites/{}/delete'.format(GALLERY_ID))
-def favorite_delete(id, token):
-    target = pages.GALLERY_ACTION_ROUTE.format(
-        gallery=id, token=token, action='addfav',
-    )
-    result = http.call(target, method='POST', params={
-        'favcat': 'favdel',
-        'apply': True,
-        'update': 1,
-    })
-    return redirect(url_for('.gallery', id=id, token=token))
