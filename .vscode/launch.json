@@ -12,7 +12,8 @@
             "env": {
                 "FLASK_APP": "app",
                 "FLASK_DEBUG": "1",
-                "TEMPLATES_AUTO_RELOAD": "1"
+                "FLASK_RUN_HOST": "0.0.0.0",
+                "TEMPLATES_AUTO_RELOAD": "1",
             },
             "args": [
                 "run",
