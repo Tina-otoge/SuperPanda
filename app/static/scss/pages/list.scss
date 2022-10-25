@@ -1,0 +1,88 @@
+#galleries {
+    @extend .row;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .cell {
+        @extend .col;
+
+        width: 260px;
+        margin-left: 4px;
+        margin-right: 4px;
+
+        @media #{$small-and-down} {
+            width: 50%;
+            padding-left: 4px;
+            padding-right: 4px;
+            margin: 0;
+            font-size: 80%;
+        }
+
+        .card {
+            // height: 450px;
+            display: block;
+            color: inherit;
+
+            .card-image img {
+                height: 320px;
+                object-fit: contain;
+
+                @media #{$small-and-down} {
+                    height: 240px;
+                }
+            }
+
+            .card-content {
+                padding: 0.5em;
+            }
+
+            .card-title {
+                font-size: 1.2em;
+                height: 64px;
+                overflow: hidden;
+                margin-bottom: 2px;
+                line-height: unset;
+            }
+
+            .card-subtitle {
+                @include text-cut;
+                height: 22px;
+                margin-bottom: 4px;
+
+                @extend .row;
+
+                &>* {
+                    padding: 0;
+                    @extend .col;
+                }
+
+                .artist {
+                    @extend .s7;
+                    @include text-cut;
+                }
+
+                .category {
+                    @extend .s5;
+                    text-align: center;
+                }
+            }
+
+            .meta {
+                @extend .row;
+
+                &>* {
+                    @include text-cut;
+                    @extend .col;
+                    @extend .s3;
+                    padding: 0;
+                    text-align: center;
+                }
+
+                .language {
+                    @extend .s6;
+                }
+            }
+        }
+    }
+}

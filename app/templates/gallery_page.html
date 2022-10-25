@@ -1,3 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="gallery-page">
+    <header class="header">
+        <h2 class="gallery-title">{{ gallery.smart_title }}</h2>
+        <div class="gallery-subtitle">{{ gallery.smart_title_orig }}</div>
+    </header>
+</div>
+
+{% endblock %}
 <a href="{{ url_for('galleries')}}">Back to galleries</a>
 
 <pre style="max-width: 100vw; white-space: pre-wrap; word-wrap: break-word;">

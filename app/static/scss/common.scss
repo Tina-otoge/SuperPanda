@@ -1,0 +1,27 @@
+body {
+    min-width: 340px;
+}
+
+#nav {
+    @extend .sidenav;
+    @extend .sidenav-fixed;
+}
+
+#title h1 {
+    font-size: 2em;
+    text-align: center;
+}
+
+#content {
+    padding-left: 300px;
+
+    @media #{$medium-and-down} {
+        padding-left: 0;
+    }
+}
+
+@mixin text-cut {
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
+}

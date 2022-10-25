@@ -1,0 +1,12 @@
+#gallery-page {
+    @extend .container;
+
+    .header {
+        text-align: center;
+    }
+
+    .gallery-subtitle {
+        font-size: 1.3em;
+        color: grey;
+    }
+}

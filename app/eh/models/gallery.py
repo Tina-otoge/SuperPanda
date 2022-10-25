@@ -67,3 +67,12 @@ class Gallery:
             languages.remove("rewrite")
             append.append("(RW)")
         return ", ".join(languages) + " ".join(append)
+
+    @property
+    def smart_title_orig(self) -> str:
+        if self.title_orig == self.title:
+            return ""
+        title = self.title_orig or self.title
+        if title == self.smart_title:
+            return ""
+        return title
