@@ -32,7 +32,11 @@ class Gallery:
     @property
     def smart_title(self) -> str:
         bracket_pos = self.title.find("]")
-        if bracket_pos == -1 or bracket_pos == len(self.title) - 1:
+        if (
+            self.title[0] not in ("[", "(")
+            or bracket_pos == -1
+            or bracket_pos == len(self.title) - 1
+        ):
             return self.title
         return self.title[bracket_pos + 1 :].strip()
 
