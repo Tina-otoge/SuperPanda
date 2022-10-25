@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 import requests_cache
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
@@ -6,7 +8,9 @@ BASE_URL = "https://e-hentai.org"
 COOKIE_DISPLAY_MODE_NAME = "sl"
 COOKIE_DISPLAY_MODE_EXTENDED = "dm_2"
 
-session = requests_cache.CachedSession("data/eh-http-cache")
+session = requests_cache.CachedSession(
+    "data/eh-http-cache", expire_after=timedelta(hours=2)
+)
 session.headers.update({"User-Agent": str(UserAgent().chrome)})
 session.cookies.update({COOKIE_DISPLAY_MODE_NAME: COOKIE_DISPLAY_MODE_EXTENDED})
 # session.proxies = {"https": "http://proxy_url:port"}
