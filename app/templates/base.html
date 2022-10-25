@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>SuperPanda</title>
+    {% for url in assets.css.urls() %}
+    <link rel="stylesheet" href="{{ url }}">
+    {% endfor %}
+</head>
+
+<body>
+    <div id="nav">
+        <div id="title">
+            <a href="{{ url_for('index') }}">
+                <h1>SuperPanda</h1>
+            </a>
+        </div>
+        <div id="search">
+            <input type="text" placeholder="Search">
+        </div>
+        <div>
+            <a href="{{ url_for('galleries') }}">
+                Latest
+            </a>
+        </div>
+    </div>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.dotdotdot/4.1.0/dotdotdot.js"
+        integrity="sha512-y3NiupaD6wK/lVGW0sAoDJ0IR2f3+BWegGT20zcCVB+uPbJOsNO2PVi09pCXEiAj4rMZlEJpCGu6oDz0PvXxeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {% for url in assets.js.urls() %}
+    <script src="{{ url }}"></script>
+    {% endfor %}
+</body>
+
+</html>

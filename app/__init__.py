@@ -7,4 +7,4 @@ app = Flask(__name__)
 logging.basicConfig()
 logging.getLogger().setLevel(logging.DEBUG)
 
-from . import routes
+from . import assets, routes

@@ -6,3 +6,5 @@ flask-assets
 flask-moment
 fake-useragent
 pysocks
+libsass
+webassets

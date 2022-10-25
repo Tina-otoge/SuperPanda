@@ -6,3 +6,5 @@ __pycache__/
 /data.json
 /output.html
 /data/
+/app/static/style.css
+/app/static/script.js

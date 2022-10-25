@@ -1,0 +1,101 @@
+@import 'materialize';
+
+#nav {
+  @extend .sidenav;
+  @extend .sidenav-fixed;
+}
+
+#title h1 {
+  font-size: 2em;
+  text-align: center;
+}
+
+#content {
+  padding-left: 300px;
+
+  @media #{$medium-and-down} {
+    padding-left: 0;
+  }
+}
+
+@mixin text-cut {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  white-space: nowrap;
+}
+
+#galleries {
+  @extend .row;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .cell {
+    @extend .col;
+
+    width: 260px;
+    margin-left: 4px;
+    margin-right: 4px;
+
+    .card {
+      height: 428px;
+      display: block;
+      color: inherit;
+
+      .card-image img {
+        height: 300px;
+        object-fit: contain;
+      }
+
+      .card-content {
+        padding: 0.5em;
+      }
+
+      .card-title {
+        font-size: 18px;
+        height: 64px;
+        overflow: hidden;
+        margin-bottom: 2px;
+      }
+
+      .card-subtitle {
+        @include text-cut;
+        height: 22px;
+        margin-bottom: 4px;
+
+        @extend .row;
+
+        &>* {
+          padding: 0;
+          @extend .col;
+        }
+
+        .artist {
+          @extend .s7;
+          @include text-cut;
+        }
+
+        .category {
+          @extend .s5;
+          text-align: center;
+        }
+      }
+
+      .meta {
+        @extend .row;
+
+        &>* {
+          @include text-cut;
+          @extend .col;
+          @extend .s3;
+          padding: 0;
+          text-align: center;
+        }
+
+        .language {
+          @extend .s6;
+        }
+      }
+    }
+  }
+}

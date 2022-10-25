@@ -1,3 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Latest galleries</h2>
+</div>
+
+<div id="galleries">
+    {% for gallery in galleries %}
+    <div class="cell">
+        <a class="card" href="{{ url_for('gallery', id=gallery.id, token=gallery.token) }}">
+            <div class="card-image">
+                <img src="{{ gallery.cover_url }}">
+            </div>
+            <div class="card-content">
+                <div class="card-title" title="{{ gallery.title }}">{{ gallery.smart_title }}</div>
+                <div class="card-subtitle">
+                    <div class="artist">{{ gallery.smart_artist }}</div>
+                    <div class="category">{{ gallery.category.name }}</div>
+                </div>
+                <div class="meta">
+                    <div class="pages">{{ gallery.pages_count }}p</div>
+                    <div class="rating">4.5⭐️</div>
+                    <div class="language">{{ gallery.smart_language }}</div>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+
 {% for gallery in galleries %}
 <pre style="max-width: 100vw; white-space: pre-wrap; word-wrap: break-word;">
     {{ gallery }}

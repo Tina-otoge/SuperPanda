@@ -2,9 +2,11 @@ import flask
 
 from app import app
 
-from . import gallery
-
 
 @app.route("/")
 def index():
-    return flask.url_for("galleries")
+    target = flask.url_for("galleries")
+    return flask.redirect(target)
+
+
+from . import gallery as gallery
