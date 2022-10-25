@@ -13,6 +13,7 @@ environment.register(
     "css",
     Bundle(
         "scss/main.scss",
+        depends="**/*.scss",
         filters=webassets.filter.get_filter(
             "libsass",
             includes=["app/lib/materialize/sass"],
