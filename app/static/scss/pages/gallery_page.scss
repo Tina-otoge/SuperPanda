@@ -5,8 +5,78 @@
         text-align: center;
     }
 
+    @media #{$medium-and-down} {
+        .header {
+            font-size: 75%;
+        }
+    }
+
+    .gallery-title {
+        font-size: 2em;
+    }
+
     .gallery-subtitle {
         font-size: 1.3em;
         color: grey;
+    }
+
+    .meta {
+        @extend .row;
+    }
+
+    .tags {
+        @extend .col;
+        @extend .s12;
+        @extend .m8;
+    }
+
+    .tags section {
+        @extend .col;
+        @extend .s6;
+        // @extend .xl4;
+    }
+
+    .tags .namespace {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin: 0.5em 0;
+    }
+
+    .tags .tag {
+        @extend .chip;
+    }
+
+    .intro {
+        @extend .col;
+        @extend .s12;
+        @extend .m4;
+
+        .cover {
+            display: flex;
+            justify-content: center;
+            margin: 1.5em 0;
+
+            img {
+                @extend .z-depth-2;
+                max-height: 300px;
+            }
+        }
+    }
+
+    .previews {
+        @include flex;
+        justify-content: flex-start;
+        margin: auto;
+
+        .page-preview {
+            margin: 6px;
+            @extend .z-depth-1;
+            @include transition;
+
+
+            &:hover {
+                @extend .z-depth-3;
+            }
+        }
     }
 }

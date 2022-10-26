@@ -1,4 +1,68 @@
-<div>
-    <a href="{{ url_for('gallery', id=gallery.id, token=gallery.token) }}">Back to gallery</a>
+{% extends "base.html" %}
+
+{% block body %}
+<div id="reader">
+    {% if next_img %}
+    <img id="preload" data-src="{{ next_img }}">
+    {% endif %}
+
+    <div id="clickers">
+        {% if pager.prev %}
+        <a href="{{ pager.prev }}" id="prev"></a>
+        {% else %}
+        <div id="prev"></div>
+        {% endif %}
+
+        {% if pager.next %}
+        <a href="{{ pager.next }}" id="next"></a>
+        {% else %}
+        <div id="next"></div>
+        {% endif %}
+    </div>
+
+    <img id="page" src="{{ img }}">
+
+    <div class="container">
+        <div id="pager">
+            <a href="{{ pager.first }}" class="first">first</a>
+
+            {% if pager.prev %}
+            <a href="{{ pager.prev }}" class="prev">prev</a>
+            {% else %}
+            <a disabled class="prev">prev</a>
+            {% endif %}
+
+            <span class="current">{{ pager.current }}</span>
+            /
+            <span class="total">{{ pager.total }}</span>
+
+            {% if pager.next %}
+            <a href="{{ pager.next }}" class="next">next</a>
+            {% else %}
+            <a disabled class="next">next</a>
+            {% endif %}
+
+            <a href="{{ pager.last }}" class="last">last</a>
+        </div>
+
+        <div>
+            <a href="{{ url_for('index') }}">Back to main menu</a>
+        </div>
+
+        <hr>
+
+        <div id="meta">
+            <a id="title" href="{{ url_for(
+            'gallery',
+            id=gallery.id,
+            token=gallery.token)
+        }}">
+                {{ gallery.title }}
+            </a>
+            <div id="artist">by {{ gallery.artist_full }}</div>
+        </div>
+
+        {% include "_previews.html" %}
+    </div>
 </div>
-<img src="{{ img }}">
+{% endblock %}

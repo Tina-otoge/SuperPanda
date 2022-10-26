@@ -20,8 +20,33 @@ body {
     }
 }
 
+hr {
+    border: none;
+    margin: 1em 0;
+    @extend .divider;
+}
+
+img {
+    max-width: 100%;
+}
+
 @mixin text-cut {
     text-overflow: ellipsis;
     overflow-x: hidden;
     white-space: nowrap;
+}
+
+@mixin flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+@mixin transition {
+    transition: all 0.2s ease-in-out;
+}
+
+[disabled] {
+    cursor: not-allowed;
+    @extend .grey-text, .text-lighten-1;
 }

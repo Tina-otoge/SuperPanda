@@ -21,7 +21,7 @@
                 </div>
                 <div class="meta">
                     <div class="pages">{{ gallery.pages_count }}p</div>
-                    <div class="rating">4.5⭐️</div>
+                    <div class="rating">0.0⭐️</div>
                     <div class="language">{{ gallery.smart_language }}</div>
                 </div>
             </div>
@@ -31,13 +31,3 @@
 </div>
 
 {% endblock %}
-
-
-{% for gallery in galleries %}
-<pre style="max-width: 100vw; white-space: pre-wrap; word-wrap: break-word;">
-    {{ gallery }}
-</pre>
-<a href="{{ url_for('gallery', id=gallery.id, token=gallery.token) }}">
-    <img src="{{ gallery.cover_url }}">
-</a>
-{% endfor %}

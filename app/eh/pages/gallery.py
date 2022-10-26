@@ -30,11 +30,19 @@ def get_gallery(id, token):
     tags = [
         x["href"].split("/")[-1] for x in meta.find(id="taglist").find_all("a")
     ]
+
+    previews = eh.get_previews(id, token)
+    first_page = previews[1]
+    first_page_token = first_page.page_token
+    cover_url = eh.get_page(id, 1, first_page_token)
+
     return Gallery(
         id=id,
         token=token,
         title=title,
         title_orig=title_orig,
+        cover_url=cover_url,
+        first_page_token=first_page_token,
         category=category,
         uploader=uploader,
         created_at=created_at,

@@ -21,13 +21,28 @@ class Gallery:
 
     title_orig: str = None
     cover_url: str = None
+    first_page_token: str = None
 
     def get_tags_by_namespace(self):
-        tags_by_namespace = {}
+        namespaces = {
+            x: []
+            for x in (
+                "artist",
+                "group",
+                "language",
+                "parody",
+                "character",
+                "female",
+                "male",
+                "other",
+            )
+        }
         for tag in self.tags:
             namespace, value = tag.split(":", 1)
-            tags_by_namespace.setdefault(namespace, []).append(value)
-        return tags_by_namespace
+            if namespace not in namespaces:
+                namespace = "other"
+            namespaces[namespace].append(value)
+        return namespaces
 
     @property
     def smart_title(self) -> str:
@@ -41,17 +56,22 @@ class Gallery:
         return self.title[bracket_pos + 1 :].strip()
 
     @property
+    def artists(self) -> list[str]:
+        return self.get_tags_by_namespace()["artist"]
+
+    @property
+    def groups(self) -> list[str]:
+        return self.get_tags_by_namespace()["group"]
+
+    @property
     def smart_artist(self) -> str:
-        tags = self.get_tags_by_namespace()
-        artists = tags.get("artist")
-        if not artists:
-            return ""
-        if len(artists) == 1:
-            return artists[0]
-        groups = tags.get("group")
-        if groups and len(groups) == 1:
-            return groups[0]
-        return ", ".join(artists)
+        if not self.artists:
+            return ", ".join(self.groups)
+        if len(self.artists) == 1:
+            return self.artists[0]
+        if self.groups and len(self.groups) == 1:
+            return self.groups[0]
+        return ", ".join(self.artists)
 
     @property
     def smart_language(self) -> str:
@@ -76,3 +96,12 @@ class Gallery:
         if title == self.smart_title:
             return ""
         return title
+
+    @property
+    def artist_full(self) -> str:
+        if not self.artists:
+            return ", ".join(self.groups)
+        s = ", ".join(self.artists)
+        if self.groups:
+            s += " " + ", ".join(self.groups)
+        return s

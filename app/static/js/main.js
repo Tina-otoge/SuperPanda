@@ -7,4 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
       new Dotdotdot(el, options);
     });
   }
+
+  const reader_img = document.getElementById('page');
+  const preload = document.getElementById('preload');
+  if (reader_img && preload) {
+    reader_img.onload = () => {
+      preload.src = preload.dataset.src;
+    };
+
+    if (reader_img.complete) {
+      // image is already loaded
+      reader_img.onload();
+    }
+  }
 });

@@ -1,0 +1,75 @@
+#reader {
+    @extend .grey, .darken-3;
+    @extend .white-text;
+
+    text-align: center;
+
+    #page {
+        @extend .grey, .darken-2;
+        height: 100vh;
+        width: 100vw;
+        object-fit: contain;
+    }
+
+    #clickers {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        z-index: 1;
+
+        &>* {
+            display: inline-block;
+            height: 100%;
+        }
+
+        #prev {
+            width: 30%;
+            // background: red;
+        }
+
+        #next {
+            width: 70%;
+            // background: blue;
+        }
+    }
+
+    #pager {
+        padding: 1em 0;
+        @include flex;
+
+        &>* {
+            margin: 0 0.5em;
+        }
+    }
+
+    #title {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin: 0.5em 0;
+        color: inherit;
+    }
+
+    .previews {
+        @include flex;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        padding: 2em 0;
+        margin-bottom: 3em;
+
+        .page-preview {
+            margin: 0 0.5em;
+        }
+    }
+
+    #preload {
+        position: fixed;
+        top: -2000px;
+        left: -2000px;
+        width: 200px;
+        height: 200px;
+    }
+}

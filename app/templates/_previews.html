@@ -1,0 +1,18 @@
+<div class="previews">
+    {% for preview in previews.values() %}
+    <a class="page-preview" href="{{ url_for(
+        'gallery_page',
+        id=gallery.id,
+        token=gallery.token,
+        page=preview.page,
+        page_token=preview.page_token,
+    ) }}">
+        <div class="image" style="
+            width: {{ preview.width }}px;    
+            height: {{ preview.height }}px;
+            background-image: url({{ preview.url }});
+            background-position-x: {{ preview.offset_x }}px;
+        "></div>
+    </a>
+    {% endfor %}
+</div>
